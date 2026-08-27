@@ -41,19 +41,12 @@ const styles = StyleSheet.create({
 
     justifyContent: "center",
     alignItems: "center",
-
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
-    borderBottomLeftRadius: 28,
-    borderBottomRightRadius: 28,
-
     overflow: "hidden",
   },
 
   logoWrapper: {
     alignItems: "center",
     justifyContent: "center",
-
     marginTop: -5,
   },
 });
