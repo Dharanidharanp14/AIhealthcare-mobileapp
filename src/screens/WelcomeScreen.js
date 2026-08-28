@@ -58,7 +58,7 @@ export default WelcomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2260FF"
+    backgroundColor: COLORS.welcomescreen
   },
 
   content: {
@@ -71,8 +71,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-
-    // Same positioning feel as Splash
     marginTop: -10,
   },
 
@@ -82,7 +80,7 @@ const styles = StyleSheet.create({
 
   description: {
     textAlign: "center",
-    color: "#FFFFFF",
+    color: COLORS.welcomedescription,
     fontSize: 10,
     lineHeight: 16,
     marginBottom: 22,

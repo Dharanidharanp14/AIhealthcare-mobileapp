@@ -6,6 +6,7 @@ import {
   Text,
   StyleSheet,
 } from "react-native";
+import COLORS from "../constants/colors";
 
 const SocialButtons = () => {
   return (
@@ -39,24 +40,24 @@ const styles = StyleSheet.create({
     height: 43,
     borderRadius: 22,
     borderWidth: 1,
-    borderColor: "#E2E7F0",
+    borderColor: COLORS.socialbutton,
     justifyContent: "center",
     alignItems: "center",
   },
 
   google: {
-    color: "#4285F4",
+    color:COLORS.google ,
     fontSize: 18,
     fontWeight: "700",
   },
 
   apple: {
-    color: "#111",
+    color:COLORS.apple ,
     fontSize: 18,
   },
 
   facebook: {
-    color: "#1877F2",
+    color:COLORS.facebook ,
     fontSize: 23,
     fontWeight: "700",
   },
