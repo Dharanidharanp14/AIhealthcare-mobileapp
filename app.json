@@ -22,8 +22,21 @@
       },
       "edgeToEdgeEnabled": true
     },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "color": "#2864F0"
+        }
+      ]
+    ],
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "62378bea-f2d6-4bbd-ab0f-d6375ad5b60f"
+      }
     }
   }
 }

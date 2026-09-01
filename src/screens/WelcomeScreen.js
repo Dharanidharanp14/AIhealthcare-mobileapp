@@ -3,13 +3,14 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   StatusBar,
 } from "react-native";
+
 
 import COLORS from "../constants/colors";
 import Logo from "../components/logo";
 import CustomButton from "../components/Custombutton";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const WelcomeScreen = ({ navigation }) => {
   return (
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center",  
     marginTop: -10,
   },
 

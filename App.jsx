@@ -1,7 +1,12 @@
-import react from "react";
+import react, { useEffect } from "react";
 import AppNavigator from "./src/navigations/AppNavigator";
+import { registerForPushNotificationsAsync } from "./src/services/notificationServices";
 
 function App(){
+ useEffect(() => {
+    registerForPushNotificationsAsync();
+  }, []);
+
   return(
     <AppNavigator/>
   )
