@@ -5,34 +5,44 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   StatusBar,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import COLORS from "../constants/colors";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/Custombutton";
 import SocialButtons from "../components/Socialbutton";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    if (!email || !password) {
-      alert("Please enter email and password");
-      return;
-    }
+const handleLogin = () => {
+  if (!email || !password) {
+    alert("Please enter email and password");
+    return;
+  }
 
-    alert("Login successful");
-  };
+  Alert.alert(
+    "Success", 
+    "Login successful",
+    [
+      {
+        text: "OK",
+        onPress: () => navigation.navigate("Home"), 
+      },
+    ]
+  );
+};
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
         barStyle="dark-content"
-        backgroundColor={COLORS.white}
+        backgroundColor={COLORS.statusbar}
       />
 
       <ScrollView

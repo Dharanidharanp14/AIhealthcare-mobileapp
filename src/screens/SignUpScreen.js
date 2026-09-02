@@ -5,7 +5,6 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   StatusBar,
   TouchableOpacity,
   ScrollView,
@@ -17,6 +16,7 @@ import COLORS from "../constants/colors";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/Custombutton";
 import SocialButtons from "../components/Socialbutton";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignUpScreen = ({ navigation }) => {
   const [fullName, setFullName] = useState("");
@@ -65,7 +65,7 @@ const handleSignup = () => {
     <SafeAreaView style={styles.container}>
       <StatusBar
         barStyle="dark-content"
-        backgroundColor={COLORS.white}
+        backgroundColor={COLORS.statusbar}
       />
 
       <ScrollView

@@ -28,7 +28,8 @@
         {
           "color": "#2864F0"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "web": {
       "favicon": "./assets/favicon.png"

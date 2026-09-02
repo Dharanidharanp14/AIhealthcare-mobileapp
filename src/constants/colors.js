@@ -15,6 +15,8 @@ const COLORS = {
  logotext:"#FFFFFF",
  welcomescreen:"#2260FF",
  welcomedescription:"#FFFFFF",
+ statusbar:"#2260FF",
+ lightBlue:"#CAD6FF"
 };
 
 export default COLORS;
