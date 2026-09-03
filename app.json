@@ -20,7 +20,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.dharanidharanp.AIhealthcaremobileapp"
     },
     "plugins": [
       [
@@ -29,7 +30,8 @@
           "color": "#2864F0"
         }
       ],
-      "expo-font"
+      "expo-font",
+      "expo-status-bar"
     ],
     "web": {
       "favicon": "./assets/favicon.png"
