@@ -11,6 +11,8 @@ const CustomButton = ({
   title,
   onPress,
   variant = "primary",
+  buttonColor,
+  textColor,
 }) => {
   return (
     <TouchableOpacity
@@ -19,12 +21,14 @@ const CustomButton = ({
       style={[
         styles.button,
         variant === "secondary" && styles.secondaryButton,
+        buttonColor && { backgroundColor: buttonColor },
       ]}
     >
       <Text
         style={[
           styles.text,
           variant === "secondary" && styles.secondaryText,
+          textColor && { color: textColor },
         ]}
       >
         {title}
@@ -40,23 +44,23 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 48,
     borderRadius: 25,
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.primary,
     justifyContent: "center",
     alignItems: "center",
   },
 
   secondaryButton: {
-    backgroundColor: COLORS.lightBlue,
+    backgroundColor: COLORS.primary,
     marginTop: 12,
   },
 
   text: {
-    color: COLORS.primary,
+    color: COLORS.white,
     fontSize: 15,
     fontWeight: "600",
   },
 
   secondaryText: {
-    color: COLORS.primary,
+    color: COLORS.white,
   },
 });

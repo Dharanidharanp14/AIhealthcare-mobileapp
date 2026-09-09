@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   View,
@@ -10,64 +9,97 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
+
+import { SafeAreaView } from "react-native-safe-area-context";
+
 import COLORS from "../constants/colors";
+
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/Custombutton";
 import SocialButtons from "../components/Socialbutton";
-import { SafeAreaView } from "react-native-safe-area-context";
 
-const SignInScreen = ({ navigation }) => {
+
+const SignInScreen = ({ navigation, route }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-const handleLogin = () => {
-  if (!email || !password) {
-    alert("Please enter email and password");
-    return;
-  }
+  useEffect(() => {
+    if (route?.params?.resetEmail) {
+      setEmail(route.params.resetEmail);
+    }
+    if (route?.params?.resetPassword) {
+      setPassword(route.params.resetPassword);
+    }
 
-  Alert.alert(
-    "Success", 
-    "Login successful",
-    [
-      {
-        text: "OK",
-        onPress: () => navigation.navigate("Home"), 
-      },
-    ]
-  );
-};
+  }, [route?.params]);
+
+  const handleLogin = () => {
+
+    if (!email || !password) {
+
+      alert("Please enter email and password");
+
+      return;
+    }
+
+
+    Alert.alert(
+      "Success",
+      "Login successful",
+      [
+        {
+          text: "OK",
+
+          onPress: () => {
+            navigation.navigate("Home");
+          },
+        },
+      ]
+    );
+  };
+
 
   return (
+
     <SafeAreaView style={styles.container}>
+
       <StatusBar
         barStyle="dark-content"
         backgroundColor={COLORS.statusbar}
       />
 
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scroll}
       >
-        {/* Header */}
+
         <View style={styles.header}>
+
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={styles.backButton}
           >
-            <Text style={styles.back}>‹</Text>
+
+            <Text style={styles.back}>
+              ‹
+            </Text>
+
           </TouchableOpacity>
+
 
           <Text style={styles.headerTitle}>
             Log In
           </Text>
 
-          {/* Empty View to balance the header */}
+
           <View style={styles.headerSpacer} />
+
         </View>
 
-        {/* Content */}
         <View style={styles.content}>
+
+
           <Text style={styles.title}>
             Welcome
           </Text>
@@ -95,10 +127,15 @@ const handleLogin = () => {
 
           <TouchableOpacity
             style={styles.forgot}
+            onPress={() =>
+              navigation.navigate("ForgotPassword")
+            }
           >
+
             <Text style={styles.forgotText}>
               Forgot Password
             </Text>
+
           </TouchableOpacity>
 
           <CustomButton
@@ -132,10 +169,10 @@ const handleLogin = () => {
     </SafeAreaView>
   );
 };
-
 export default SignInScreen;
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
@@ -166,15 +203,15 @@ const styles = StyleSheet.create({
   },
 
   headerTitle: {
-    flex: 1, 
+    flex: 1,
     color: COLORS.primary,
     fontSize: 18,
     fontWeight: "600",
-    textAlign: "center", 
+    textAlign: "center",
   },
 
   headerSpacer: {
-    width: 40, // Same width as backButton to balance
+    width: 40,
   },
 
   content: {
@@ -224,7 +261,6 @@ const styles = StyleSheet.create({
     color: COLORS.gray,
     fontSize: 10,
   },
-
   link: {
     color: COLORS.primary,
     fontSize: 10,

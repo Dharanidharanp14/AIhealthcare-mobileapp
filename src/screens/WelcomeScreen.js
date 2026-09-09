@@ -36,16 +36,20 @@ const WelcomeScreen = ({ navigation }) => {
             incididunt ut labore et dolore magna aliqua.
           </Text>
 
-          <CustomButton
-            title="Log In"
-            onPress={() => navigation.navigate("SignIn")}
-          />
+        <CustomButton
+  title="Log In"
+  onPress={() => navigation.navigate("SignIn")}
+  buttonColor={COLORS.white}
+  textColor={COLORS.primary}
+/>
 
-          <CustomButton
-            title="Sign Up"
-            variant="secondary"
-            onPress={() => navigation.navigate("SignUp")}
-          />
+<CustomButton
+  title="Sign Up"
+  variant="secondary"
+  onPress={() => navigation.navigate("SignUp")}
+  buttonColor={COLORS.white}
+  textColor={COLORS.primary}
+/>
 
         </View>
 

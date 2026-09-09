@@ -26,5 +26,9 @@
     "react-native-screens": "~4.26.0",
     "react-native-vector-icons": "^10.3.0"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "@types/react": "~19.2.4",
+    "typescript": "~6.0.3"
+  }
 }

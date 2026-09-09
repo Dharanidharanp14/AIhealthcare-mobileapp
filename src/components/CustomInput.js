@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 
+import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../constants/colors";
 
 const CustomInput = ({
@@ -20,10 +21,11 @@ const CustomInput = ({
   keyboardType = "default",
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={styles.label}>
+        {label}
+      </Text>
 
       <View style={styles.inputWrapper}>
         <TextInput
@@ -45,17 +47,23 @@ const CustomInput = ({
               setShowPassword(!showPassword)
             }
             style={styles.eyeButton}
+            activeOpacity={0.7}
           >
-            <Text style={styles.eye}>
-              {showPassword ? "👁" : "👁️‍🗨️"}
-            </Text>
+            <Ionicons
+              name={
+                showPassword
+                  ? "eye-outline"
+                  : "eye-off-outline"
+              }
+              size={20}
+              color={COLORS.gray}
+            />
           </TouchableOpacity>
         )}
       </View>
     </View>
   );
 };
-
 export default CustomInput;
 
 const styles = StyleSheet.create({
@@ -90,9 +98,8 @@ const styles = StyleSheet.create({
 
   eyeButton: {
     paddingHorizontal: 14,
-  },
-
-  eye: {
-    fontSize: 16,
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
