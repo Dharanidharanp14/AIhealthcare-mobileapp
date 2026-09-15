@@ -51,7 +51,7 @@ const SignInScreen = ({ navigation, route }) => {
           text: "OK",
 
           onPress: () => {
-            navigation.navigate("Home");
+            navigation.navigate("Main");
           },
         },
       ]

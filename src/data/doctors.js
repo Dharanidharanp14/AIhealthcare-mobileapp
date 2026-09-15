@@ -31,6 +31,7 @@ const doctors = [
     reviews: "90",
     image: "https://randomuser.me/api/portraits/men/4.jpg",
   },
+  
 ];
 
 export default doctors;

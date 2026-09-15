@@ -17,7 +17,7 @@ import DoctorCard from "../components/homecomponent/DoctorCard";
 import AppointmentSchedule from "../components/homecomponent/AppointmentSchedule"
 import COLORS from "../constants/colors";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Doctors");
   const [selectedDate, setSelectedDate] = useState("11");
@@ -45,7 +45,7 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}
       >
 
-        <HomeHeader />
+        <HomeHeader navigation={navigation} />
 
         <SearchBar
           value={search}
@@ -73,9 +73,6 @@ const HomeScreen = () => {
             Recommended Doctors
           </Text>
 
-          <Text style={styles.seeAll}>
-            See All
-          </Text>
         </View>
 
         {filteredDoctors.length > 0 ? (

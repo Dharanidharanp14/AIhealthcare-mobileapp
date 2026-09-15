@@ -9,7 +9,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors";
 
-const HomeHeader = () => {
+const HomeHeader = ({ navigation }) => {
   return (
     <View style={styles.container}>
 
@@ -34,18 +34,23 @@ const HomeHeader = () => {
 
       <View style={styles.actions}>
 
-        <TouchableOpacity style={styles.circle}>
-          <Ionicons
-            name="notifications-outline"
-            size={23}
-            color={COLORS.black}
-          />
-        </TouchableOpacity>
+        <TouchableOpacity
+  style={styles.circle}
+  onPress={() => navigation.navigate("Notification")}
+>
+  <Ionicons
+    name="notifications-outline"
+    size={23}
+    color={COLORS.black}
+  />
+</TouchableOpacity>
 
-        <TouchableOpacity style={styles.circle}>
-          <Ionicons
-            name="settings-outline"
-            size={23}
+        <TouchableOpacity
+  style={styles.circle}
+>
+  <Ionicons
+    name="settings-outline"
+    size={23}
             color={COLORS.black}
           />
         </TouchableOpacity>
