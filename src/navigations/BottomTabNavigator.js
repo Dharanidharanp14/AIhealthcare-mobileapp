@@ -6,28 +6,40 @@ import {
 
 import { Ionicons } from "@expo/vector-icons";
 
-import HomeScreen from "../screens/HomeScreen";
 import COLORS from "../constants/colors";
-import AppointmentsScreen from "../screens/AppointmentsScreen";
+
+import HomeNavigator from "./HomeNavigator";
+import AppointmentNavigator from "./AppointmentNavigator";
 import MessageScreen from "../screens/MessageScreen";
-import ProfileScreen from "../screens/ProfileScreen";
+import ProfileNavigator from "./ProfileNavigator";
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigator = () => {
+const BottomTabNavigator = ({ route }) => {
+
+  const currentPassword =
+    route?.params?.currentPassword || "";
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
+
       screenOptions={({ route }) => ({
+
         headerShown: false,
+
         tabBarShowLabel: false,
+
         tabBarActiveTintColor: COLORS.white,
         tabBarInactiveTintColor: COLORS.white,
+
         tabBarStyle: {
           position: "absolute",
+
           left: 30,
           right: 30,
           bottom: 0,
+
           height: 49,
 
           backgroundColor: COLORS.primary,
@@ -39,10 +51,12 @@ const BottomTabNavigator = () => {
           elevation: 5,
 
           shadowColor: "#000",
+
           shadowOffset: {
             width: 0,
             height: 3,
           },
+
           shadowOpacity: 0.15,
           shadowRadius: 5,
 
@@ -50,7 +64,6 @@ const BottomTabNavigator = () => {
           paddingBottom: 0,
         },
 
-        // Remove default spacing
         tabBarItemStyle: {
           height: 49,
           padding: 0,
@@ -59,32 +72,40 @@ const BottomTabNavigator = () => {
         tabBarIcon: ({
           focused,
           color,
-          size,
         }) => {
+
           let iconName;
 
           if (route.name === "Home") {
+
             iconName = focused
               ? "home"
               : "home-outline";
+
           }
 
-          if (route.name === "Chat") {
+          else if (route.name === "Chat") {
+
             iconName = focused
               ? "chatbubbles"
               : "chatbubbles-outline";
+
           }
 
-          if (route.name === "Profile") {
+          else if (route.name === "Profile") {
+
             iconName = focused
               ? "person"
               : "person-outline";
+
           }
 
-          if (route.name === "Appointments") {
+          else if (route.name === "Appointments") {
+
             iconName = focused
               ? "calendar"
               : "calendar-outline";
+
           }
 
           return (
@@ -95,27 +116,42 @@ const BottomTabNavigator = () => {
             />
           );
         },
+
       })}
     >
 
+      {/* HOME */}
+
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeNavigator}
       />
+
+
+      {/* CHAT */}
 
       <Tab.Screen
         name="Chat"
         component={MessageScreen}
       />
 
+
+      {/* PROFILE */}
+
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={ProfileNavigator}
+        initialParams={{
+          currentPassword: currentPassword,
+        }}
       />
+
+
+      {/* APPOINTMENTS */}
 
       <Tab.Screen
         name="Appointments"
-        component={AppointmentsScreen}
+        component={AppointmentNavigator}
       />
 
     </Tab.Navigator>

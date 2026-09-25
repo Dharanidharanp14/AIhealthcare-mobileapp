@@ -47,6 +47,7 @@ const HomeHeader = ({ navigation }) => {
 
         <TouchableOpacity
   style={styles.circle}
+  onPress={() => navigation.navigate("Profile")}
 >
   <Ionicons
     name="settings-outline"

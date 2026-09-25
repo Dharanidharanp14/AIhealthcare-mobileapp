@@ -1,61 +1,101 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
+  ScrollView,
 } from "react-native";
+
 import COLORS from "../../constants/colors";
 
-const dates = [
-  { date: "9", day: "MON" },
-  { date: "10", day: "TUE" },
-  { date: "11", day: "WED" },
-  { date: "12", day: "THU" },
-  { date: "13", day: "FRI" },
-  { date: "14", day: "SAT" },
-];
+const DateSelector = ({ selectedDate, setSelectedDate }) => {
+  // Generate next 30 real dates
+  const dates = useMemo(() => {
+    const today = new Date();
 
-const DateSelector = ({
-  selectedDate,
-  setSelectedDate,
-}) => {
+    return Array.from({ length: 30 }, (_, index) => {
+      const date = new Date(today);
+
+      date.setDate(today.getDate() + index);
+
+      return {
+        date: date.getDate(),
+
+        day: date
+          .toLocaleDateString("en-US", {
+            weekday: "short",
+          })
+          .toUpperCase(),
+
+        month: date
+          .toLocaleDateString("en-US", {
+            month: "short",
+          })
+          .toUpperCase(),
+
+        fullDate: [
+          date.getFullYear(),
+          String(date.getMonth() + 1).padStart(2, "0"),
+          String(date.getDate()).padStart(2, "0"),
+        ].join("-"),
+      };
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {dates.map((item) => {
+          const selected = selectedDate === item.fullDate;
 
-      {dates.map((item) => {
-        const selected = selectedDate === item.date;
-
-        return (
-          <TouchableOpacity
-            key={item.date}
-            onPress={() => setSelectedDate(item.date)}
-            style={[
-              styles.dateCard,
-              selected && styles.selectedCard,
-            ]}
-          >
-            <Text
+          return (
+            <TouchableOpacity
+              key={item.fullDate}
+              activeOpacity={0.8}
+              onPress={() => setSelectedDate(item.fullDate)}
               style={[
-                styles.date,
-                selected && styles.selectedText,
+                styles.dateCard,
+                selected && styles.selectedCard,
               ]}
             >
-              {item.date}
-            </Text>
+              {/* Date */}
+              <Text
+                style={[
+                  styles.date,
+                  selected && styles.selectedText,
+                ]}
+              >
+                {item.date}
+              </Text>
 
-            <Text
-              style={[
-                styles.day,
-                selected && styles.selectedText,
-              ]}
-            >
-              {item.day}
-            </Text>
-          </TouchableOpacity>
-        );
-      })}
+              {/* Day */}
+              <Text
+                style={[
+                  styles.day,
+                  selected && styles.selectedText,
+                ]}
+              >
+                {item.day}
+              </Text>
 
+              {/* Month */}
+              <Text
+                style={[
+                  styles.month,
+                  selected && styles.selectedText,
+                ]}
+              >
+                {item.month}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
     </View>
   );
 };
@@ -64,18 +104,21 @@ export default DateSelector;
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 6,
-    paddingHorizontal: 30,
     marginTop: 28,
   },
 
+  scrollContent: {
+    paddingHorizontal: 30,
+    gap: 8,
+  },
+
   dateCard: {
-    width: 45,
-    height: 64,
-    justifyContent: "center",
+    width: 70,
+    height: 50,
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    gap: 4,
     borderRadius: 17,
     backgroundColor: COLORS.white,
   },
@@ -85,15 +128,21 @@ const styles = StyleSheet.create({
   },
 
   date: {
-    fontSize: 20,
+    fontSize: 18,
+    fontWeight: "600",
     color: COLORS.black,
-    fontWeight: "500",
   },
 
   day: {
     fontSize: 10,
+    fontWeight: "500",
     color: "#555",
-    marginTop: 5,
+  },
+
+  month: {
+    fontSize: 10,
+    fontWeight: "500",
+    color: "#555",
   },
 
   selectedText: {

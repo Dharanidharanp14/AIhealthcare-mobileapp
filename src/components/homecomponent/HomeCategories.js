@@ -12,9 +12,13 @@ const HomeCategories = ({ active, setActive }) => {
   return (
     <View style={styles.container}>
 
+      {/* Doctors */}
       <TouchableOpacity
         onPress={() => setActive("Doctors")}
-        style={styles.item}
+        style={[
+          styles.item,
+          active === "Doctors" && styles.activeItem,
+        ]}
       >
         <Ionicons
           name="medkit-outline"
@@ -27,12 +31,20 @@ const HomeCategories = ({ active, setActive }) => {
         </Text>
       </TouchableOpacity>
 
+      {/* Favorite */}
       <TouchableOpacity
         onPress={() => setActive("Favorite")}
-        style={styles.item}
+        style={[
+          styles.item,
+          active === "Favorite" && styles.activeItem,
+        ]}
       >
         <Ionicons
-          name="heart-outline"
+          name={
+            active === "Favorite"
+              ? "heart"
+              : "heart-outline"
+          }
           size={32}
           color={COLORS.primary}
         />
@@ -58,6 +70,10 @@ const styles = StyleSheet.create({
 
   item: {
     alignItems: "center",
+  },
+
+  activeItem: {
+    // optional active style
   },
 
   text: {

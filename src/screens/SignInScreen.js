@@ -50,9 +50,11 @@ const SignInScreen = ({ navigation, route }) => {
         {
           text: "OK",
 
-          onPress: () => {
-            navigation.navigate("Main");
-          },
+         onPress: () => {
+  navigation.navigate("Main", {
+    currentPassword: password,
+  });
+},
         },
       ]
     );

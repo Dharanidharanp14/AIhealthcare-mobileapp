@@ -5,20 +5,65 @@ import {
   StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+
 import COLORS from "../../constants/colors";
 
-const AppointmentSchedule = () => {
-  const times = ["9 AM", "10 AM", "11 AM", "12 AM"];
+const AppointmentSchedule = ({ selectedDate }) => {
+  const times = ["9 AM", "10 AM", "11 AM", "12 PM"];
+
+  // Convert YYYY-MM-DD to a readable date
+  const getSelectedDateInfo = () => {
+    if (!selectedDate) {
+      const today = new Date();
+
+      return {
+        date: today.getDate(),
+        day: today.toLocaleDateString("en-US", {
+          weekday: "long",
+        }),
+        isToday: true,
+      };
+    }
+
+    // Avoid timezone problems with YYYY-MM-DD
+    const [year, month, day] = selectedDate.split("-");
+
+    const date = new Date(
+      Number(year),
+      Number(month) - 1,
+      Number(day)
+    );
+
+    const today = new Date();
+
+    const isToday =
+      date.getFullYear() === today.getFullYear() &&
+      date.getMonth() === today.getMonth() &&
+      date.getDate() === today.getDate();
+
+    return {
+      date: date.getDate(),
+      day: date.toLocaleDateString("en-US", {
+        weekday: "long",
+      }),
+      isToday,
+    };
+  };
+
+  const selectedDateInfo = getSelectedDateInfo();
 
   return (
     <View style={styles.container}>
 
+      {/* Selected Date */}
       <Text style={styles.title}>
-        11 Wednesday - Today
+        {selectedDateInfo.date} {selectedDateInfo.day}
+        {selectedDateInfo.isToday ? " - Today" : ""}
       </Text>
 
       <View style={styles.schedule}>
 
+        {/* Time column */}
         <View style={styles.times}>
           {times.map((time) => (
             <Text
@@ -30,6 +75,7 @@ const AppointmentSchedule = () => {
           ))}
         </View>
 
+        {/* Schedule lines */}
         <View style={styles.lines}>
 
           {times.map((time, index) => (
@@ -38,12 +84,15 @@ const AppointmentSchedule = () => {
               style={styles.lineRow}
             >
 
+              {/* Dashed line */}
               <View style={styles.dashedLine} />
 
+              {/* Appointment */}
               {index === 1 && (
                 <View style={styles.appointment}>
 
-                  <View>
+                  <View style={styles.appointmentContent}>
+
                     <Text style={styles.doctorName}>
                       Dr. Olivia Turner, M.D.
                     </Text>
@@ -55,6 +104,7 @@ const AppointmentSchedule = () => {
                     <Text style={styles.description}>
                       skin and photodermatitis.
                     </Text>
+
                   </View>
 
                   <View style={styles.close}>
@@ -74,7 +124,6 @@ const AppointmentSchedule = () => {
         </View>
 
       </View>
-
     </View>
   );
 };
@@ -145,6 +194,10 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+
+  appointmentContent: {
+    flex: 1,
   },
 
   doctorName: {
