@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import {
   View,
   Text,
@@ -7,87 +6,68 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-
 import { Ionicons } from "@expo/vector-icons";
-
 import COLORS from "../../constants/colors";
 
-const BLUE = COLORS.primary || "#2864FF";
-const LIGHT_BLUE = "#C9D5FF";
-const QUESTION_BG = "#E8EDFF";
-
 const FAQ = () => {
-
   const [activeCategory, setActiveCategory] =
     useState("Popular Topic");
-
   const [openQuestion, setOpenQuestion] =
     useState(0);
-
-
   const faqData = [
-
     {
-      question: "Lorem ipsum dolor sit amet?",
+      question: "How do I update my profile?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pellentesque congue lorem, vel tincidunt tortor placerat a. Proin ac diam quam. Aenean in sagittis magna, ut feugiat diam.",
+        "Open Profile and choose Edit Profile to change your name, phone number, email address, or date of birth. Select Update Profile when you are finished.",
     },
 
     {
-      question: "Lorem ipsum dolor sit amet?",
+      question: "Can I book an appointment in this app?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pellentesque congue lorem, vel tincidunt tortor placerat a.",
+        "This prototype displays sample provider and appointment screens, but it does not send booking requests to a clinic. Contact your provider directly to arrange a visit.",
     },
 
     {
-      question: "Lorem ipsum dolor sit amet?",
+      question: "Does cancelling here notify my clinic?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pellentesque congue lorem, vel tincidunt tortor placerat a.",
+        "No. The cancellation screen currently shows a local confirmation only. Contact your clinic directly to confirm or change an appointment.",
     },
 
     {
-      question: "Lorem ipsum dolor sit amet?",
+      question: "Can I send a message to a doctor?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pellentesque congue lorem, vel tincidunt tortor placerat a.",
+        "The conversation shown in this prototype is for demonstration. Messages are not delivered to a provider; use your clinic's verified contact method instead.",
     },
 
     {
-      question: "Lorem ipsum dolor sit amet?",
+      question: "Is this app a substitute for medical advice?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pellentesque congue lorem, vel tincidunt tortor placerat a.",
+        "No. Information in this app is not a diagnosis or treatment plan. Speak with a licensed healthcare professional about your health.",
     },
 
     {
-      question: "Lorem ipsum dolor sit amet?",
+      question: "Will my profile changes still be here after restarting?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pellentesque congue lorem, vel tincidunt tortor placerat a.",
+        "Not necessarily. This prototype keeps profile details in app memory and does not save them to an account server. Avoid entering sensitive health or payment information.",
     },
 
   ];
 
-
   const toggleQuestion = (index) => {
-
     if (openQuestion === index) {
       setOpenQuestion(null);
     } else {
       setOpenQuestion(index);
     }
-
   };
 
-
   return (
-
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.container}
     >
-
       {/* CATEGORY */}
-
       <View style={styles.categoryRow}>
-
         <TouchableOpacity
           style={[
             styles.categoryButton,
@@ -98,7 +78,6 @@ const FAQ = () => {
             setActiveCategory("Popular Topic")
           }
         >
-
           <Text
             style={[
               styles.categoryText,
@@ -191,7 +170,7 @@ const FAQ = () => {
                     : "chevron-down"
                 }
                 size={21}
-                color={BLUE}
+                color={COLORS.primary}
               />
 
             </TouchableOpacity>
@@ -246,18 +225,18 @@ const styles = StyleSheet.create({
 
     borderRadius: 15,
 
-    backgroundColor: LIGHT_BLUE,
+    backgroundColor: COLORS.lightBlue,
 
     justifyContent: "center",
     alignItems: "center",
   },
 
   activeCategory: {
-    backgroundColor: BLUE,
+    backgroundColor: COLORS.primary,
   },
 
   categoryText: {
-    color: BLUE,
+    color: COLORS.primary,
     fontSize: 11,
   },
 
@@ -270,7 +249,7 @@ const styles = StyleSheet.create({
 
     borderRadius: 18,
 
-    backgroundColor: QUESTION_BG,
+    backgroundColor: COLORS.QUESTION_BG,
 
     paddingHorizontal: 13,
 
@@ -286,7 +265,7 @@ const styles = StyleSheet.create({
   questionText: {
     flex: 1,
 
-    color: "#555",
+    color: COLORS.gray,
 
     fontSize: 11,
 
@@ -302,7 +281,7 @@ const styles = StyleSheet.create({
   },
 
   answerText: {
-    color: "#555",
+    color: COLORS.gray,
 
     fontSize: 10,
 

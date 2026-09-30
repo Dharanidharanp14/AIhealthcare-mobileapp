@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  Alert,
 } from "react-native";
 
 import {
@@ -18,6 +17,8 @@ import {
 } from "@expo/vector-icons";
 
 import COLORS from "../../constants/colors";
+import CommonHeader from "../../components/CommonHeader";
+import { useCustomAlert } from "../../components/CustomAlertProvider";
 
 const reasons = [
   "Rescheduling",
@@ -30,6 +31,7 @@ const CancelAppointmentScreen = ({
   navigation,
   route,
 }) => {
+  const { showAlert } = useCustomAlert();
 
   const [selectedReason, setSelectedReason] =
     useState("Weather Conditions");
@@ -42,13 +44,11 @@ const CancelAppointmentScreen = ({
   const handleCancel = () => {
 
     if (!selectedReason) {
-      Alert.alert(
-        "Please select a reason"
-      );
+      showAlert("Select a reason", "Choose a reason before continuing.", [], "error");
       return;
     }
 
-    Alert.alert(
+    showAlert(
       "Appointment Cancelled",
       "Your appointment has been cancelled.",
       [
@@ -57,7 +57,8 @@ const CancelAppointmentScreen = ({
           onPress: () =>
             navigation.navigate("AllAppointment"),
         },
-      ]
+      ],
+      "success"
     );
   };
 
@@ -68,31 +69,13 @@ const CancelAppointmentScreen = ({
 
         {/* Header */}
 
-        <View style={styles.header}>
-
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.backButton}
-          >
-            <Ionicons
-              name="chevron-back"
-              size={28}
-              color={COLORS.primary}
-            />
-          </TouchableOpacity>
-
-          <Text style={styles.headerTitle}>
-            Cancel Appointment
-          </Text>
-
-          <View style={styles.headerSpace} />
-
-        </View>
+        <CommonHeader
+          title="Cancel Appointment"
+          navigation={navigation}
+        />
 
         <Text style={styles.description}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua.
+          Choose the reason that best describes your request. This prototype does not send cancellation requests to a clinic, so contact your provider directly to confirm any changes.
         </Text>
 
         {/* Reasons */}
@@ -138,9 +121,7 @@ const CancelAppointmentScreen = ({
         </View>
 
         <Text style={styles.reasonDescription}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua.
+          Add a brief note if you need to explain your request. Do not include sensitive medical or payment information.
         </Text>
 
         {/* Text Area */}
@@ -242,7 +223,7 @@ const styles = StyleSheet.create({
   },
 
   reasonDescription: {
-    color: "#8DA8FF",
+    color: COLORS.softPeriwinkle,
     fontSize: 10,
     lineHeight: 12,
     marginTop: 15,
@@ -250,7 +231,7 @@ const styles = StyleSheet.create({
 
   textArea: {
     height: 167,
-    backgroundColor: "#E8EDFF",
+    backgroundColor: COLORS.QUESTION_BG,
     borderRadius: 17,
     padding: 13,
     fontSize: 12,

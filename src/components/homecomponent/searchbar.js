@@ -14,14 +14,14 @@ const SearchBar = ({ value, onChangeText }) => {
       <Ionicons
         name="options-outline"
         size={25}
-        color="#333"
+        color={COLORS.searchText}
       />
 
       <TextInput
         value={value}
         onChangeText={onChangeText}
         placeholder="Search doctors..."
-        placeholderTextColor="#777"
+        placeholderTextColor={COLORS.gray}
         style={styles.input}
       />
 

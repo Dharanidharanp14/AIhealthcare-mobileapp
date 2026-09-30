@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
-  Alert,
 } from "react-native";
 
 import {
@@ -19,11 +18,14 @@ import {
 } from "@expo/vector-icons";
 
 import COLORS from "../../constants/colors";
+import CommonHeader from "../../components/CommonHeader";
+import { useCustomAlert } from "../../components/CustomAlertProvider";
 
 const ReviewScreen = ({
   navigation,
   route,
 }) => {
+  const { showAlert } = useCustomAlert();
 
   const doctor = route?.params?.doctor;
 
@@ -41,7 +43,7 @@ const ReviewScreen = ({
 
   const handleReview = () => {
 
-    Alert.alert(
+    showAlert(
       "Review Added",
       "Thank you for your review.",
       [
@@ -50,7 +52,8 @@ const ReviewScreen = ({
           onPress: () =>
             navigation.navigate("AllAppointment"),
         },
-      ]
+      ],
+      "success"
     );
   };
 
@@ -61,31 +64,13 @@ const ReviewScreen = ({
 
         {/* Header */}
 
-        <View style={styles.header}>
-
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.backButton}
-          >
-            <Ionicons
-              name="chevron-back"
-              size={28}
-              color={COLORS.primary}
-            />
-          </TouchableOpacity>
-
-          <Text style={styles.headerTitle}>
-            Review
-          </Text>
-
-          <View style={styles.headerSpace} />
-
-        </View>
+        <CommonHeader
+          title="Review"
+          navigation={navigation}
+        />
 
         <Text style={styles.description}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua.
+          Share constructive feedback about your visit. This prototype keeps the review on this screen and does not send it to the provider.
         </Text>
 
         {/* Doctor */}
@@ -232,14 +217,14 @@ const styles = StyleSheet.create({
     width: 140,
     height: 140,
     borderRadius: 70,
-    backgroundColor: "#B8C0C0",
+    backgroundColor: COLORS.mutedStone,
   },
 
   imagePlaceholder: {
     width: 140,
     height: 140,
     borderRadius: 70,
-    backgroundColor: "#AEB7B7",
+    backgroundColor: COLORS.mutedStoneDark,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -270,7 +255,7 @@ const styles = StyleSheet.create({
 
   commentBox: {
     height: 151,
-    backgroundColor: "#E8EDFF",
+    backgroundColor: COLORS.QUESTION_BG,
     borderRadius: 17,
     marginTop: 15,
     padding: 13,

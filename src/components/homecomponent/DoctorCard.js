@@ -9,6 +9,7 @@ import {
 } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
+import COLORS from "../../constants/colors";
 
 const DoctorCard = ({
   doctor,
@@ -39,12 +40,11 @@ const DoctorCard = ({
   return (
     <TouchableOpacity
       style={styles.card}
-      activeOpacity={0.8}
       onPress={handleDoctorPress}
+      activeOpacity={0.8}
+      accessibilityRole="button"
+      accessibilityLabel={`View ${doctor.name}, ${doctor.specialty}`}
     >
-
-      {/* Doctor Image */}
-
       <Image
         source={{
           uri: doctor.image,
@@ -52,87 +52,33 @@ const DoctorCard = ({
         style={styles.image}
       />
 
-
-      {/* Doctor Details */}
-
       <View style={styles.content}>
-
-        <Text
-          style={styles.name}
-          numberOfLines={1}
-        >
-          {doctor.name}
+        <Text style={styles.name} numberOfLines={1}>
+          {doctor.name.replace(/,\s*(M\.D\.|Ph\.D\.)$/, "")}
         </Text>
-
-        <Text style={styles.specialty}>
+        <Text style={styles.specialty} numberOfLines={1}>
           {doctor.specialty}
         </Text>
-
-
-        {/* Rating + Reviews */}
-
-        <View style={styles.bottom}>
-
-          <View style={styles.badge}>
-
+        <View style={styles.metaRow}>
+          <View style={styles.rating}>
             <Ionicons
               name="star"
-              size={10}
-              color="#2864F0"
+              size={13}
+              color={COLORS.primary}
             />
-
-            <Text style={styles.badgeText}>
+            <Text style={styles.ratingText}>
               {doctor.rating}
             </Text>
-
           </View>
-
-
-          <View style={styles.badge}>
-
-            <Ionicons
-              name="chatbubble-outline"
-              size={10}
-              color="#2864F0"
-            />
-
-            <Text style={styles.badgeText}>
-              {doctor.reviews}
+          <Text style={styles.reviewCount}>
+            {doctor.reviews} reviews
             </Text>
-
-          </View>
-
         </View>
-
       </View>
 
-
-      {/* Right Icons */}
-
-      <View style={styles.rightIcons}>
-
-        {/* Doctor Info */}
-
-        <TouchableOpacity
-          onPress={handleDoctorPress}
-          hitSlop={{
-            top: 10,
-            bottom: 10,
-            left: 10,
-            right: 10,
-          }}
-        >
-          <Ionicons
-            name="help-circle-outline"
-            size={20}
-            color="#2864F0"
-          />
-        </TouchableOpacity>
-
-
-        {/* Favorite */}
-
-        <TouchableOpacity
+      <TouchableOpacity
+          accessibilityRole="button"
+          accessibilityLabel={liked ? "Remove from favorites" : "Add to favorites"}
           onPress={handleLikePress}
           hitSlop={{
             top: 10,
@@ -140,24 +86,14 @@ const DoctorCard = ({
             left: 10,
             right: 10,
           }}
+          style={styles.favoriteButton}
         >
           <Ionicons
-            name={
-              liked
-                ? "heart"
-                : "heart-outline"
-            }
+            name={liked ? "heart" : "heart-outline"}
             size={20}
-            color={
-              liked
-                ? "#FF3B5C"
-                : "#2864F0"
-            }
+            color={liked ? COLORS.red : COLORS.gray}
           />
-        </TouchableOpacity>
-
-      </View>
-
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 };
@@ -168,92 +104,76 @@ export default DoctorCard;
 const styles = StyleSheet.create({
 
   card: {
-    height: 74,
-
-    marginBottom: 8,
+    minHeight: 102,
+    marginBottom: 12,
     marginHorizontal: 30,
-
-    borderRadius: 18,
-
-    backgroundColor: "#C8D6FF",
-
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    backgroundColor: COLORS.white,
     flexDirection: "row",
     alignItems: "center",
-
     paddingHorizontal: 12,
+    paddingVertical: 12,
   },
 
   image: {
-    width: 55,
-    height: 55,
-
-    borderRadius: 28,
-
-    backgroundColor: "#E5E5E5",
+    width: 62,
+    height: 62,
+    borderRadius: 12,
+    backgroundColor: COLORS.softBlue,
   },
 
   content: {
     flex: 1,
-    marginLeft: 10,
+    minWidth: 0,
+    marginLeft: 12,
+    marginRight: 8,
   },
 
   name: {
-    backgroundColor: "#FFF",
-
-    borderRadius: 15,
-
-    paddingHorizontal: 12,
-    paddingVertical: 5,
-
-    fontSize: 11,
-
-    color: "#2864F0",
+    color: COLORS.darkText,
+    fontSize: 14,
+    fontWeight: "700",
   },
 
   specialty: {
-    fontSize: 9,
-
-    color: "#444",
-
-    marginTop: 3,
-    marginLeft: 12,
+    marginTop: 4,
+    color: COLORS.gray,
+    fontSize: 12,
   },
 
-  bottom: {
+  metaRow: {
+    marginTop: 8,
     flexDirection: "row",
-
-    gap: 6,
-
-    marginTop: 3,
+    alignItems: "center",
+    gap: 10,
   },
 
-  badge: {
-    backgroundColor: "#FFF",
-
-    borderRadius: 10,
-
-    paddingHorizontal: 7,
-    paddingVertical: 2,
-
+  rating: {
     flexDirection: "row",
-
     alignItems: "center",
-
-    gap: 3,
+    gap: 4,
   },
 
-  badgeText: {
-    fontSize: 9,
-
-    color: "#2864F0",
+  ratingText: {
+    color: COLORS.primary,
+    fontSize: 12,
+    fontWeight: "700",
   },
 
-  rightIcons: {
-    gap: 8,
+  reviewCount: {
+    color: COLORS.gray,
+    fontSize: 11,
+  },
 
+  favoriteButton: {
+    width: 36,
+    height: 36,
     alignItems: "center",
-
     justifyContent: "center",
+    borderRadius: 18,
+    backgroundColor: COLORS.inputBackground,
   },
 
 });

@@ -17,8 +17,9 @@ import {
 } from "@expo/vector-icons";
 
 import COLORS from "../../constants/colors";
+import CommonHeader from "../../components/CommonHeader";
 
-const BLUE = "#2864FF";
+const BLUE = COLORS.blue;
 
 const PrivacyPolicyScreen = ({ navigation }) => {
 
@@ -27,27 +28,11 @@ const PrivacyPolicyScreen = ({ navigation }) => {
 
       {/* ================= HEADER ================= */}
 
-      <View style={styles.header}>
-
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-          activeOpacity={0.7}
-        >
-          <Ionicons
-            name="chevron-back"
-            size={28}
-            color={BLUE}
-          />
-        </TouchableOpacity>
-
-        <Text style={styles.headerTitle}>
-          Privacy Policy
-        </Text>
-
-        <View style={styles.headerSpace} />
-
-      </View>
+      <CommonHeader
+        title="Privacy Policy"
+        navigation={navigation}
+        backIconColor={BLUE}
+      />
 
 
       {/* ================= CONTENT ================= */}
@@ -60,31 +45,21 @@ const PrivacyPolicyScreen = ({ navigation }) => {
         {/* Last Update */}
 
         <Text style={styles.lastUpdate}>
-          Last Update: 14/08/2024
+          Demo notice updated: September 30, 2026
         </Text>
 
 
         {/* First Paragraph */}
 
         <Text style={styles.paragraph}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit. Praesent pellentesque congue lorem, vel
-          tincidunt tortor placerat a. Proin ac diam quam.
-          Aenean in sagittis magna, ut feugiat diam. Fusce a
-          scelerisque neque, sed accumsan metus.
+          This notice describes the current prototype only. It is not a final privacy policy. Before using a production healthcare service, review its published privacy policy and contact the service with questions about how it handles your information.
         </Text>
 
 
         {/* Second Paragraph */}
 
         <Text style={styles.paragraph}>
-          Nunc auctor tortor in dolor luctus, quis euismod
-          urna tincidunt. Aenean arcu metus, bibendum at
-          rhoncus at, volutpat ut lacus. Morbi pellentesque
-          malesuada eros semper ultrices. Vestibulum lobortis
-          enim vel neque auctor, a ultrices ex placerat.
-          Mauris ut lacinia justo, sed suscipit tortor. Nam
-          egestas nulla posuere neque tincidunt porta.
+          Profile details in this build are held in app memory and are not connected to an account server; they may be cleared when the app restarts. The app may request permission for notifications and request a push token. Do not enter sensitive health, identity, or payment information in this prototype.
         </Text>
 
 
@@ -104,14 +79,7 @@ const PrivacyPolicyScreen = ({ navigation }) => {
           </Text>
 
           <Text style={styles.pointText}>
-            Ut lacinia justo sit amet lorem sodales accumsan.
-            Proin malesuada eleifend fermentum. Donec
-            condimentum, nunc at rhoncus faucibus, ex nisi
-            laoreet ipsum, eu pharetra eros est vitae orci.
-            Morbi quis rhoncus mi. Nullam lacinia ornare
-            accumsan. Duis laoreet, ex eget rutrum pharetra,
-            lectus nisl posuere risus, vel facilisis nisi tellus
-            ac turpis.
+            Provider profiles and appointment details shown in this prototype may be sample content. Verify provider credentials and appointment information directly with the clinic before relying on them.
           </Text>
 
         </View>
@@ -126,13 +94,7 @@ const PrivacyPolicyScreen = ({ navigation }) => {
           </Text>
 
           <Text style={styles.pointText}>
-            Ut lacinia justo sit amet lorem sodales accumsan.
-            Proin malesuada eleifend fermentum. Donec
-            condimentum, nunc at rhoncus faucibus, ex nisi
-            laoreet ipsum, eu pharetra eros est vitae orci.
-            Morbi quis rhoncus mi. Nullam lacinia ornare
-            accumsan. Duis laoreet, ex eget rutrum pharetra,
-            lectus nisl posuere risus, vel facilisis nisi tellus.
+            Booking, cancellation, review, and messaging actions in this build are demonstrations. They do not submit information to a healthcare provider.
           </Text>
 
         </View>
@@ -147,10 +109,7 @@ const PrivacyPolicyScreen = ({ navigation }) => {
           </Text>
 
           <Text style={styles.pointText}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit. Praesent pellentesque congue lorem, vel
-            tincidunt tortor placerat a. Proin ac diam quam.
-            Aenean in sagittis magna, ut feugiat diam.
+            Information in this app is not medical advice, diagnosis, or treatment. Ask a licensed healthcare professional about care decisions.
           </Text>
 
         </View>
@@ -165,13 +124,7 @@ const PrivacyPolicyScreen = ({ navigation }) => {
           </Text>
 
           <Text style={styles.pointText}>
-            Nunc auctor tortor in dolor luctus, quis euismod
-            urna tincidunt. Aenean arcu metus, bibendum at
-            rhoncus at, volutpat ut lacus. Morbi pellentesque
-            malesuada eros semper ultrices. Vestibulum lobortis
-            enim vel neque auctor, a ultrices ex placerat.
-            Mauris ut lacinia justo, sed suscipit tortor. Nam
-            egestas nulla posuere neque.
+            If you may be experiencing a medical emergency, contact your local emergency services. Do not use this prototype to request urgent care.
           </Text>
 
         </View>
@@ -243,7 +196,7 @@ const styles = StyleSheet.create({
   },
 
   lastUpdate: {
-    color: "#9AAFFF",
+    color: COLORS.softPurple,
 
     fontSize: 10,
 
@@ -251,7 +204,7 @@ const styles = StyleSheet.create({
   },
 
   paragraph: {
-    color: "#333",
+    color: COLORS.searchText,
 
     fontSize: 11,
 
@@ -285,7 +238,7 @@ const styles = StyleSheet.create({
   number: {
     width: 15,
 
-    color: "#333",
+    color: COLORS.searchText,
 
     fontSize: 11,
 
@@ -295,7 +248,7 @@ const styles = StyleSheet.create({
   pointText: {
     flex: 1,
 
-    color: "#333",
+    color: COLORS.searchText,
 
     fontSize: 11,
 

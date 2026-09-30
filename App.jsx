@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Constants from "expo-constants";
 import AppNavigator from "./src/navigations/AppNavigator";
+import CustomAlertProvider from "./src/components/CustomAlertProvider";
 
 function App() {
   useEffect(() => {
@@ -35,7 +36,11 @@ function App() {
     setupNotifications();
   }, []);
 
-  return <AppNavigator />;
+  return (
+    <CustomAlertProvider>
+      <AppNavigator />
+    </CustomAlertProvider>
+  );
 }
 
 export default App;

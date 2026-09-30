@@ -12,6 +12,7 @@ import {
 } from "react-native-safe-area-context";
 
 import doctors from "../data/doctors";
+import appointments from "../data/appointments";
 
 import HomeHeader from "../components/homecomponent/homeheader";
 import SearchBar from "../components/homecomponent/searchbar";
@@ -22,6 +23,13 @@ import AppointmentSchedule from "../components/homecomponent/AppointmentSchedule
 
 import COLORS from "../constants/colors";
 
+const toDateKey = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
 
 const HomeScreen = ({ navigation }) => {
 
@@ -30,8 +38,9 @@ const HomeScreen = ({ navigation }) => {
   const [category, setCategory] =
     useState("Doctors");
 
-  const [selectedDate, setSelectedDate] =
-    useState("11");
+  const [selectedDate, setSelectedDate] = useState(() =>
+    toDateKey(new Date())
+  );
 
 
   // STORE LIKED DOCTOR IDs
@@ -124,6 +133,7 @@ const HomeScreen = ({ navigation }) => {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
       >
 
         {/* HEADER */}
@@ -164,6 +174,7 @@ const HomeScreen = ({ navigation }) => {
 
           <AppointmentSchedule
             selectedDate={selectedDate}
+            appointments={appointments}
           />
 
         </View>
@@ -238,7 +249,11 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: "#FFF",
+    backgroundColor: COLORS.white,
+  },
+
+  scrollContent: {
+    paddingBottom: 112,
   },
 
   sectionHeader: {
@@ -255,26 +270,19 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 15,
     fontWeight: "600",
-    color: "#111",
+    color: COLORS.darkText,
   },
 
   noResult: {
     textAlign: "center",
     marginTop: 30,
-    color: "#777",
+    color: COLORS.gray,
     fontSize: 13,
   },
 
   dateselector: {
-    backgroundColor:
-      COLORS.lightBlue,
-
-    borderRadius: 20,
-
-    marginHorizontal: 30,
-    marginTop: 10,
-
-    height: 300,
+    marginTop: 8,
+    paddingBottom: 8,
   },
 
 });

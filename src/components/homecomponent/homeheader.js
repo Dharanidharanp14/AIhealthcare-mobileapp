@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,8 +8,21 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors";
+import { getUserProfile, subscribeToUserProfile } from "../../store/userStore";
 
 const HomeHeader = ({ navigation }) => {
+  const [profile, setProfile] = useState(getUserProfile());
+
+  useEffect(() => {
+    const unsubscribe = subscribeToUserProfile(() => {
+      setProfile(getUserProfile());
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const displayName = profile.fullName || "John Doe";
+
   return (
     <View style={styles.container}>
 
@@ -27,7 +40,7 @@ const HomeHeader = ({ navigation }) => {
           </Text>
 
           <Text style={styles.name}>
-            John Doe
+            {displayName}
           </Text>
         </View>
       </View>
@@ -87,7 +100,7 @@ const styles = StyleSheet.create({
   },
 
   greeting: {
-    color: "#5F83E8",
+    color: COLORS.headerBlue,
     fontSize: 12,
   },
 

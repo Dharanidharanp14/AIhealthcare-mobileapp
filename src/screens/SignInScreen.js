@@ -7,7 +7,6 @@ import {
   StatusBar,
   TouchableOpacity,
   ScrollView,
-  Alert,
 } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,9 +16,13 @@ import COLORS from "../constants/colors";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/Custombutton";
 import SocialButtons from "../components/Socialbutton";
+import CommonHeader from "../components/CommonHeader";
+import { useCustomAlert } from "../components/CustomAlertProvider";
+import { setUserProfile } from "../store/userStore";
 
 
 const SignInScreen = ({ navigation, route }) => {
+  const { showAlert } = useCustomAlert();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -30,6 +33,9 @@ const SignInScreen = ({ navigation, route }) => {
     if (route?.params?.resetPassword) {
       setPassword(route.params.resetPassword);
     }
+    if (route?.params?.userProfile) {
+      setUserProfile(route.params.userProfile);
+    }
 
   }, [route?.params]);
 
@@ -37,26 +43,36 @@ const SignInScreen = ({ navigation, route }) => {
 
     if (!email || !password) {
 
-      alert("Please enter email and password");
+      showAlert("Missing information", "Please enter email and password", [], "error");
 
       return;
     }
 
 
-    Alert.alert(
+    showAlert(
       "Success",
       "Login successful",
       [
         {
-          text: "OK",
+          text: "Continue",
+          onPress: () => {
+            const profileFromLogin = route?.params?.userProfile || {
+              fullName: email.split("@")[0] || "John Doe",
+              email,
+              phone: "+123 567 89000",
+              dateOfBirth: "",
+            };
 
-         onPress: () => {
-  navigation.navigate("Main", {
-    currentPassword: password,
-  });
-},
+            setUserProfile(profileFromLogin);
+
+            navigation.navigate("Main", {
+              currentPassword: password,
+              userProfile: profileFromLogin,
+            });
+          },
         },
-      ]
+      ],
+      "success"
     );
   };
 
@@ -76,28 +92,10 @@ const SignInScreen = ({ navigation, route }) => {
         contentContainerStyle={styles.scroll}
       >
 
-        <View style={styles.header}>
-
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.backButton}
-          >
-
-            <Text style={styles.back}>
-              ‹
-            </Text>
-
-          </TouchableOpacity>
-
-
-          <Text style={styles.headerTitle}>
-            Log In
-          </Text>
-
-
-          <View style={styles.headerSpacer} />
-
-        </View>
+        <CommonHeader
+          title="Log In"
+          navigation={navigation}
+        />
 
         <View style={styles.content}>
 
@@ -193,27 +191,11 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
 
-  backButton: {
-    width: 40,
-    justifyContent: "center",
-  },
-
-  back: {
-    color: COLORS.primary,
-    fontSize: 36,
-    fontWeight: "300",
-  },
-
   headerTitle: {
-    flex: 1,
     color: COLORS.primary,
     fontSize: 18,
     fontWeight: "600",
     textAlign: "center",
-  },
-
-  headerSpacer: {
-    width: 40,
   },
 
   content: {

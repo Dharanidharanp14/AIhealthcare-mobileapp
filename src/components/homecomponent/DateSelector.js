@@ -10,7 +10,6 @@ import {
 import COLORS from "../../constants/colors";
 
 const DateSelector = ({ selectedDate, setSelectedDate }) => {
-  // Generate next 30 real dates
   const dates = useMemo(() => {
     const today = new Date();
 
@@ -45,6 +44,7 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.sectionTitle}>Select date</Text>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -57,12 +57,25 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
             <TouchableOpacity
               key={item.fullDate}
               activeOpacity={0.8}
+              accessibilityRole="button"
+              accessibilityLabel={`${item.day}, ${item.month} ${item.date}`}
+              accessibilityState={{ selected }}
               onPress={() => setSelectedDate(item.fullDate)}
               style={[
                 styles.dateCard,
                 selected && styles.selectedCard,
               ]}
             >
+              {/* Month */}
+              <Text
+                style={[
+                  styles.month,
+                  selected && styles.selectedText,
+                ]}
+              >
+                {item.month}
+              </Text>
+
               {/* Date */}
               <Text
                 style={[
@@ -82,16 +95,6 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
               >
                 {item.day}
               </Text>
-
-              {/* Month */}
-              <Text
-                style={[
-                  styles.month,
-                  selected && styles.selectedText,
-                ]}
-              >
-                {item.month}
-              </Text>
             </TouchableOpacity>
           );
         })}
@@ -104,23 +107,34 @@ export default DateSelector;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 28,
+    marginTop: 18,
+  },
+
+  sectionTitle: {
+    color: COLORS.darkText,
+    fontSize: 15,
+    fontWeight: "600",
+    marginBottom: 12,
+    paddingHorizontal: 30,
   },
 
   scrollContent: {
     paddingHorizontal: 30,
-    gap: 8,
+    paddingBottom: 3,
+    gap: 9,
   },
 
   dateCard: {
-    width: 70,
-    height: 50,
-    flexDirection: "row",
+    width: 60,
+    height: 84,
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    gap: 4,
-    borderRadius: 17,
+    gap: 2,
+    borderRadius: 12,
     backgroundColor: COLORS.white,
+    borderWidth: 1,
+    borderColor: COLORS.border,
   },
 
   selectedCard: {
@@ -128,21 +142,22 @@ const styles = StyleSheet.create({
   },
 
   date: {
-    fontSize: 18,
+    fontSize: 23,
     fontWeight: "600",
     color: COLORS.black,
+    lineHeight: 27,
   },
 
   day: {
-    fontSize: 10,
-    fontWeight: "500",
-    color: "#555",
+    fontSize: 11,
+    fontWeight: "600",
+    color: COLORS.softText,
   },
 
   month: {
     fontSize: 10,
-    fontWeight: "500",
-    color: "#555",
+    fontWeight: "600",
+    color: COLORS.primary,
   },
 
   selectedText: {

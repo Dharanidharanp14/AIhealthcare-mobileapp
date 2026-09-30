@@ -23,14 +23,6 @@ const HomeNavigator = () => {
         name="HomeScreen"
         component={HomeScreen}
       />
-
-      {/* Doctor Details Screen */}
-
-      <Stack.Screen
-        name="DoctorInfo"
-        component={DoctorInfoScreen}
-      />
-
     </Stack.Navigator>
   );
 };

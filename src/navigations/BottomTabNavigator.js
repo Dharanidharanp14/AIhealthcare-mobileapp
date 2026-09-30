@@ -10,8 +10,9 @@ import COLORS from "../constants/colors";
 
 import HomeNavigator from "./HomeNavigator";
 import AppointmentNavigator from "./AppointmentNavigator";
-import MessageScreen from "../screens/MessageScreen";
-import ProfileNavigator from "./ProfileNavigator";
+import ChatListScreen from "../screens/ChatListScreen";
+import ProfileScreen from "../screens/profile/ProfileScreen";
+
 
 const Tab = createBottomTabNavigator();
 
@@ -50,7 +51,7 @@ const BottomTabNavigator = ({ route }) => {
 
           elevation: 5,
 
-          shadowColor: "#000",
+          shadowColor: COLORS.black,
 
           shadowOffset: {
             width: 0,
@@ -132,7 +133,7 @@ const BottomTabNavigator = ({ route }) => {
 
       <Tab.Screen
         name="Chat"
-        component={MessageScreen}
+        component={ChatListScreen}
       />
 
 
@@ -140,7 +141,7 @@ const BottomTabNavigator = ({ route }) => {
 
       <Tab.Screen
         name="Profile"
-        component={ProfileNavigator}
+        component={ProfileScreen}
         initialParams={{
           currentPassword: currentPassword,
         }}

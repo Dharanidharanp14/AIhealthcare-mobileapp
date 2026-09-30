@@ -18,6 +18,8 @@ import {
 
 import COLORS from "../../constants/colors";
 
+import CommonHeader from "../../components/CommonHeader";
+
 import FAQ from "../../components/helpcenter/FAQ";
 import ContactUs from "../../components/helpcenter/ContactUs";
 
@@ -27,59 +29,37 @@ const HelpCenterScreen = ({ navigation }) => {
   const [activeTab, setActiveTab] =
     useState("Contact Us");
 
-
   return (
-
     <SafeAreaView style={styles.container}>
 
-      {/* BLUE HEADER */}
+      {/* ================= HEADER ================= */}
 
       <View style={styles.header}>
 
-        {/* BACK */}
+        <CommonHeader
+          title="Help Center"
+          subtitle="How Can We Help You?"
+          navigation={navigation}
+          backIconColor={COLORS.white}
+          style={styles.bannerHeader}
+          titleStyle={styles.headerTitle}
+          subtitleStyle={styles.headerSubtitle}
+        />
 
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-
-          <Ionicons
-            name="chevron-back"
-            size={28}
-            color={COLORS.white}
-          />
-
-        </TouchableOpacity>
-
-
-        {/* TITLE */}
-
-        <Text style={styles.headerTitle}>
-          Help Center
-        </Text>
-
-
-        {/* SUBTITLE */}
-
-        <Text style={styles.subtitle}>
-          How Can We Help You?
-        </Text>
-
-
-        {/* SEARCH */}
+        {/* ================= SEARCH ================= */}
 
         <View style={styles.searchContainer}>
 
           <Ionicons
             name="search-outline"
-            size={18}
+            size={19}
             color={COLORS.primary}
           />
 
           <TextInput
             style={styles.searchInput}
             placeholder="Search..."
-            placeholderTextColor="#C4D0F5"
+            placeholderTextColor={COLORS.subtleBlue}
           />
 
         </View>
@@ -87,7 +67,7 @@ const HelpCenterScreen = ({ navigation }) => {
       </View>
 
 
-      {/* TABS */}
+      {/* ================= TABS ================= */}
 
       <View style={styles.tabs}>
 
@@ -145,7 +125,7 @@ const HelpCenterScreen = ({ navigation }) => {
       </View>
 
 
-      {/* CONTENT */}
+      {/* ================= CONTENT ================= */}
 
       <View style={styles.content}>
 
@@ -158,7 +138,6 @@ const HelpCenterScreen = ({ navigation }) => {
       </View>
 
     </SafeAreaView>
-
   );
 };
 
@@ -169,10 +148,11 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
+
     backgroundColor: COLORS.white,
   },
 
-  /* HEADER */
+  /* ================= HEADER ================= */
 
   header: {
     height: 168,
@@ -180,45 +160,38 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
 
     paddingHorizontal: 30,
-
-    position: "relative",
   },
 
-  backButton: {
-    position: "absolute",
+  bannerHeader: {
+    height: 78,
 
-    left: 27,
-    top: 27,
-
-    zIndex: 10,
+    paddingHorizontal: 0,
   },
 
   headerTitle: {
     color: COLORS.white,
 
-    textAlign: "center",
-
-    fontSize: 22,
+    fontSize: 21,
 
     fontWeight: "700",
 
-    marginTop: 25,
+    textAlign: "center",
   },
 
-  subtitle: {
-    color: "#DDE5FF",
+  headerSubtitle: {
+    color: COLORS.paleSoftBlue,
+
+    fontSize: 13,
+
+    marginTop: 4,
 
     textAlign: "center",
-
-    fontSize: 14,
-
-    marginTop: 19,
   },
 
-  /* SEARCH */
+  /* ================= SEARCH ================= */
 
   searchContainer: {
-    height: 39,
+    height: 42,
 
     backgroundColor: COLORS.white,
 
@@ -228,9 +201,9 @@ const styles = StyleSheet.create({
 
     alignItems: "center",
 
-    paddingHorizontal: 13,
+    paddingHorizontal: 14,
 
-    marginTop: 17,
+    marginTop: 10,
   },
 
   searchInput: {
@@ -245,7 +218,7 @@ const styles = StyleSheet.create({
     color: COLORS.black,
   },
 
-  /* TABS */
+  /* ================= TABS ================= */
 
   tabs: {
     flexDirection: "row",
@@ -266,7 +239,7 @@ const styles = StyleSheet.create({
 
     borderRadius: 22,
 
-    backgroundColor: "#C9D5FF",
+    backgroundColor: COLORS.lightLavender,
 
     justifyContent: "center",
 
@@ -280,7 +253,7 @@ const styles = StyleSheet.create({
   tabText: {
     color: COLORS.primary,
 
-    fontSize: 17,
+    fontSize: 16,
 
     fontWeight: "500",
   },
@@ -289,7 +262,7 @@ const styles = StyleSheet.create({
     color: COLORS.white,
   },
 
-  /* CONTENT */
+  /* ================= CONTENT ================= */
 
   content: {
     flex: 1,

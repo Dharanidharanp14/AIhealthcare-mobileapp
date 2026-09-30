@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
-  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -22,23 +21,22 @@ import {
 } from "@expo/vector-icons";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
-
 import COLORS from "../../constants/colors";
+import CommonHeader from "../../components/CommonHeader";
+import { useCustomAlert } from "../../components/CustomAlertProvider";
+import { getUserProfile, setUserProfile } from "../../store/userStore";
 
-const BLUE = "#2864FF";
+const BLUE = COLORS.blue;
+
 
 const EditProfileScreen = ({
   navigation,
   route,
 }) => {
+  const { showAlert } = useCustomAlert();
 
 
-  const profile = route?.params?.profile || {
-    fullName: "John Doe",
-    phone: "+123 567 89000",
-    email: "johndoe@example.com",
-    dateOfBirth: "",
-  };
+  const profile = route?.params?.profile || getUserProfile();
 
 
 
@@ -100,31 +98,29 @@ const EditProfileScreen = ({
 
 
 
-  const handleUpdateProfile = () => {
+ const handleUpdateProfile = () => {
 
-    if (!fullName.trim()) {
+  if (!fullName.trim()) {
+    showAlert("Name required", "Please enter your full name.", [], "error");
+    return;
+  }
 
-      Alert.alert(
-        "Error",
-        "Please enter your full name"
-      );
-
-      return;
-    }
-
-    const updatedProfile = {
-      fullName: fullName.trim(),
-      phone: phone.trim(),
-      email: email.trim(),
-      dateOfBirth: dateOfBirth,
-    };
-
-    // Send updated profile to ProfileScreen
-
-    navigation.navigate("ProfileHome", {
-      updatedProfile: updatedProfile,
-    });
+  const updatedProfile = {
+    fullName: fullName.trim(),
+    phone: phone.trim(),
+    email: email.trim(),
+    dateOfBirth: dateOfBirth,
   };
+
+  setUserProfile(updatedProfile);
+
+  navigation.navigate("Main", {
+    screen: "Profile",
+    params: {
+      updatedProfile: updatedProfile,
+    },
+  });
+};
 
   return (
     <SafeAreaView style={styles.container}>
@@ -145,30 +141,11 @@ const EditProfileScreen = ({
 
           {/* ================= HEADER ================= */}
 
-          <View style={styles.header}>
-
-            <TouchableOpacity
-              style={styles.backButton}
-              onPress={() =>
-                navigation.goBack()
-              }
-            >
-
-              <Ionicons
-                name="chevron-back"
-                size={28}
-                color={BLUE}
-              />
-
-            </TouchableOpacity>
-
-            <Text style={styles.headerTitle}>
-              Profile
-            </Text>
-
-            <View style={styles.headerSpace} />
-
-          </View>
+          <CommonHeader
+            title="Profile"
+            navigation={navigation}
+            backIconColor={BLUE}
+          />
 
 
           {/* ================= PROFILE IMAGE ================= */}
@@ -192,7 +169,7 @@ const EditProfileScreen = ({
                 <Ionicons
                   name="create-outline"
                   size={17}
-                  color="#fff"
+                  color={COLORS.white}
                 />
 
               </TouchableOpacity>
@@ -219,7 +196,7 @@ const EditProfileScreen = ({
                 value={fullName}
                 onChangeText={setFullName}
                 placeholder="Full Name"
-                placeholderTextColor="#777"
+                placeholderTextColor={COLORS.gray}
               />
 
             </View>
@@ -238,7 +215,7 @@ const EditProfileScreen = ({
                 value={phone}
                 onChangeText={setPhone}
                 placeholder="+123 567 89000"
-                placeholderTextColor="#777"
+                placeholderTextColor={COLORS.gray}
                 keyboardType="phone-pad"
               />
 
@@ -258,7 +235,7 @@ const EditProfileScreen = ({
                 value={email}
                 onChangeText={setEmail}
                 placeholder="johndoe@example.com"
-                placeholderTextColor="#777"
+                placeholderTextColor={COLORS.gray}
                 keyboardType="email-address"
                 autoCapitalize="none"
               />
@@ -314,7 +291,8 @@ const EditProfileScreen = ({
                     : "calendar"
                 }
                 maximumDate={new Date()}
-                onChange={handleDateChange}
+                onValueChange={handleDateChange}
+                onDismiss={() => setShowDatePicker(false)}
               />
             )}
 
@@ -354,7 +332,7 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor:COLORS.white,
   },
 
   keyboard: {
@@ -364,42 +342,6 @@ const styles = StyleSheet.create({
   scroll: {
     flexGrow: 1,
     paddingBottom: 30,
-  },
-
-  // ================= HEADER =================
-
-  header: {
-    height: 65,
-
-    flexDirection: "row",
-
-    alignItems: "center",
-
-    paddingHorizontal: 28,
-
-    marginTop: 8,
-  },
-
-  backButton: {
-    width: 50,
-
-    justifyContent: "center",
-  },
-
-  headerTitle: {
-    flex: 1,
-
-    textAlign: "center",
-
-    color: BLUE,
-
-    fontSize: 22,
-
-    fontWeight: "700",
-  },
-
-  headerSpace: {
-    width: 50,
   },
 
   // ================= IMAGE =================
@@ -459,7 +401,7 @@ const styles = StyleSheet.create({
 
     fontWeight: "500",
 
-    color: "#111",
+    color: COLORS.darkText,
 
     marginBottom: 9,
   },
@@ -469,13 +411,13 @@ const styles = StyleSheet.create({
 
     borderRadius: 12,
 
-    backgroundColor: "#E8EDFF",
+    backgroundColor:COLORS.QUESTION_BG,
 
     paddingHorizontal: 24,
 
     fontSize: 17,
 
-    color: "#111",
+    color:COLORS.apple,
   },
 
   // ================= DATE =================
@@ -485,7 +427,7 @@ const styles = StyleSheet.create({
 
     borderRadius: 12,
 
-    backgroundColor: "#E8EDFF",
+    backgroundColor: COLORS.QUESTION_BG,
 
     paddingHorizontal: 24,
 
@@ -499,7 +441,7 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 17,
 
-    color: "#111",
+    color: COLORS.apple,
   },
 
   placeholderDate: {
@@ -527,7 +469,7 @@ const styles = StyleSheet.create({
 
     borderRadius: 25,
 
-    backgroundColor: BLUE,
+    backgroundColor: COLORS.primary,
 
     justifyContent: "center",
 
@@ -535,10 +477,8 @@ const styles = StyleSheet.create({
   },
 
   updateButtonText: {
-    color: "#fff",
-
+    color: COLORS.white,
     fontSize: 20,
-
     fontWeight: "500",
   },
 

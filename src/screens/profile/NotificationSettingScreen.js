@@ -16,9 +16,10 @@ import {
 } from "@expo/vector-icons";
 
 import COLORS from "../../constants/colors";
+import CommonHeader from "../../components/CommonHeader";
 
-const BLUE = "#2864FF";
-const LIGHT_BLUE = "#C9D6FF";
+const BLUE = COLORS.blue;
+const LIGHT_BLUE = COLORS.paleBlue;
 
 const NotificationSettingScreen = ({
   navigation,
@@ -82,26 +83,11 @@ const NotificationSettingScreen = ({
 
       {/* Header */}
 
-      <View style={styles.header}>
-
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Ionicons
-            name="chevron-back"
-            size={28}
-            color={BLUE}
-          />
-        </TouchableOpacity>
-
-        <Text style={styles.headerTitle}>
-          Notification Setting
-        </Text>
-
-        <View style={styles.headerSpace} />
-
-      </View>
+      <CommonHeader
+        title="Notification Setting"
+        navigation={navigation}
+        backIconColor={BLUE}
+      />
 
 
       {/* Settings */}
@@ -212,7 +198,7 @@ const styles = StyleSheet.create({
   },
 
   itemText: {
-    color: "#111",
+    color: COLORS.darkText,
 
     fontSize: 18,
 
@@ -246,7 +232,7 @@ const styles = StyleSheet.create({
 
     borderRadius: 11,
 
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.white,
   },
 
   circleOn: {

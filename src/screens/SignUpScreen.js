@@ -9,16 +9,18 @@ import {
   TouchableOpacity,
   ScrollView,
   Platform,
-  Alert,
 } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import COLORS from "../constants/colors";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/Custombutton";
+import CommonHeader from "../components/CommonHeader";
+import { useCustomAlert } from "../components/CustomAlertProvider";
 import SocialButtons from "../components/Socialbutton";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignUpScreen = ({ navigation }) => {
+  const { showAlert } = useCustomAlert();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,19 +31,27 @@ const SignUpScreen = ({ navigation }) => {
 
 const handleSignup = () => {
   if (!fullName || !email || !password || !mobile || !dob) {
-    Alert.alert("Error", "Please fill all fields");
+    showAlert("Missing information", "Please fill all fields", [], "error");
     return;
   }
-
-  Alert.alert(
-    "Success",
-    "Account created successfully",
+  showAlert(
+    "Account created",
+    "Your account has been created successfully.",
     [
       {
-        text: "OK",
-        onPress: () => navigation.navigate("SignIn"),
+        text: "Continue",
+        onPress: () =>
+          navigation.navigate("SignIn", {
+            userProfile: {
+              fullName,
+              email,
+              phone: mobile,
+              dateOfBirth: dob,
+            },
+          }),
       },
-    ]
+    ],
+    "success"
   );
 };
 
@@ -73,20 +83,10 @@ const handleSignup = () => {
         contentContainerStyle={styles.scroll}
       >
         {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.backButton}
-          >
-            <Text style={styles.back}>‹</Text>
-          </TouchableOpacity>
-
-          <Text style={styles.headerTitle}>
-            New Account
-          </Text>
-
-          <View style={styles.headerSpacer} />
-        </View>
+        <CommonHeader
+          title="New Account"
+          navigation={navigation}
+        />
 
         {/* Form */}
         <View style={styles.content}>
@@ -153,7 +153,8 @@ const handleSignup = () => {
               value={date}
               mode="date"
               display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-              onChange={onChangeDate}
+              onValueChange={onChangeDate}
+              onDismiss={() => setShowDatePicker(false)}
               maximumDate={new Date()}
             />
           )}
@@ -216,27 +217,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 
-  backButton: {
-    width: 40,
-    justifyContent: "center",
-  },
-
-  back: {
-    color: COLORS.primary,
-    fontSize: 36,
-    fontWeight: "300",
-  },
-
   headerTitle: {
-    flex: 1,
     color: COLORS.primary,
     fontSize: 18,
     fontWeight: "600",
     textAlign: "center",
-  },
-
-  headerSpacer: {
-    width: 40,
   },
 
   content: {

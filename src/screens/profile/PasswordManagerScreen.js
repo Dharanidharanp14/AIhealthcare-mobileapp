@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  Alert,
 } from "react-native";
 
 import {
@@ -18,13 +17,16 @@ import {
 } from "@expo/vector-icons";
 
 import COLORS from "../../constants/colors";
+import CommonHeader from "../../components/CommonHeader";
+import { useCustomAlert } from "../../components/CustomAlertProvider";
 
-const BLUE = "#2864FF";
+const BLUE = COLORS.blue;
 
 const PasswordManagerScreen = ({
   navigation,
   route,
 }) => {
+  const { showAlert } = useCustomAlert();
 
 
   const loginPassword =
@@ -53,46 +55,31 @@ const PasswordManagerScreen = ({
   const handleChangePassword = () => {
 
     if (!currentPassword) {
-      Alert.alert(
-        "Error",
-        "Please enter your current password"
-      );
+      showAlert("Current password required", "Please enter your current password.", [], "error");
       return;
     }
 
     if (!newPassword) {
-      Alert.alert(
-        "Error",
-        "Please enter your new password"
-      );
+      showAlert("New password required", "Please enter your new password.", [], "error");
       return;
     }
 
     if (newPassword.length < 6) {
-      Alert.alert(
-        "Error",
-        "New password must be at least 6 characters"
-      );
+      showAlert("Password too short", "New password must be at least 6 characters.", [], "error");
       return;
     }
 
     if (!confirmPassword) {
-      Alert.alert(
-        "Error",
-        "Please confirm your new password"
-      );
+      showAlert("Confirmation required", "Please confirm your new password.", [], "error");
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      Alert.alert(
-        "Error",
-        "New password and confirm password do not match"
-      );
+      showAlert("Passwords do not match", "Check both fields and try again.", [], "error");
       return;
     }
 
-    Alert.alert(
+    showAlert(
       "Success",
       "Password changed successfully",
       [
@@ -102,7 +89,8 @@ const PasswordManagerScreen = ({
             navigation.goBack();
           },
         },
-      ]
+      ],
+      "success"
     );
   };
 
@@ -111,26 +99,11 @@ const PasswordManagerScreen = ({
 
       {/* ================= HEADER ================= */}
 
-      <View style={styles.header}>
-
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Ionicons
-            name="chevron-back"
-            size={28}
-            color={BLUE}
-          />
-        </TouchableOpacity>
-
-        <Text style={styles.headerTitle}>
-          Password Manager
-        </Text>
-
-        <View style={styles.headerSpace} />
-
-      </View>
+      <CommonHeader
+        title="Password Manager"
+        navigation={navigation}
+        backIconColor={BLUE}
+      />
 
 
       {/* ================= FORM ================= */}
@@ -171,7 +144,7 @@ const PasswordManagerScreen = ({
                     : "eye-off-outline"
                 }
                 size={21}
-                color="#111"
+                color={COLORS.darkText}
               />
             </TouchableOpacity>
 
@@ -225,7 +198,7 @@ const PasswordManagerScreen = ({
                     : "eye-off-outline"
                 }
                 size={21}
-                color="#111"
+                color={COLORS.darkText}
               />
             </TouchableOpacity>
 
@@ -268,7 +241,7 @@ const PasswordManagerScreen = ({
                     : "eye-off-outline"
                 }
                 size={21}
-                color="#111"
+                color={COLORS.darkText}
               />
             </TouchableOpacity>
 
@@ -366,7 +339,7 @@ const styles = StyleSheet.create({
 
     fontWeight: "500",
 
-    color: "#111",
+    color: COLORS.darkText,
 
     marginBottom: 9,
   },
@@ -376,7 +349,7 @@ const styles = StyleSheet.create({
 
     borderRadius: 12,
 
-    backgroundColor: "#E8EDFF",
+    backgroundColor: COLORS.QUESTION_BG,
 
     flexDirection: "row",
 

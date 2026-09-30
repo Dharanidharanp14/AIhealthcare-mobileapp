@@ -7,7 +7,6 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  Alert,
 } from "react-native";
 
 import {
@@ -19,9 +18,12 @@ import {
 } from "@expo/vector-icons";
 
 import COLORS from "../../constants/colors";
+import CommonHeader from "../../components/CommonHeader";
+import { useCustomAlert } from "../../components/CustomAlertProvider";
 import doctors from "../../data/doctors";
 
 const AllAppointmentScreen = ({ navigation }) => {
+  const { showAlert } = useCustomAlert();
 
   const [activeTab, setActiveTab] = useState("Complete");
 
@@ -115,9 +117,11 @@ const AllAppointmentScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.detailsButton}
             onPress={() =>
-              Alert.alert(
+              showAlert(
                 "Appointment Details",
-                `${doctor.name}\n${doctor.specialty}`
+                `${doctor.name}\n${doctor.specialty}`,
+                [],
+                "info"
               )
             }
           >
@@ -223,9 +227,11 @@ const AllAppointmentScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.rebookButton}
             onPress={() =>
-              Alert.alert(
+              showAlert(
                 "Re-Book",
-                "Appointment re-book option selected"
+                "Appointment re-book option selected",
+                [],
+                "info"
               )
             }
           >
@@ -319,9 +325,11 @@ const AllAppointmentScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.rebookButton}
             onPress={() =>
-              Alert.alert(
+              showAlert(
                 "Re-Book",
-                "Appointment re-book option selected"
+                "Appointment re-book option selected",
+                [],
+                "info"
               )
             }
           >
@@ -359,26 +367,10 @@ const AllAppointmentScreen = ({ navigation }) => {
 
         {/* Header */}
 
-        <View style={styles.header}>
-
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.backButton}
-          >
-            <Ionicons
-              name="chevron-back"
-              size={28}
-              color={COLORS.primary}
-            />
-          </TouchableOpacity>
-
-          <Text style={styles.headerTitle}>
-            All Appointment
-          </Text>
-
-          <View style={styles.headerSpace} />
-
-        </View>
+        <CommonHeader
+          title="All Appointment"
+          navigation={navigation}
+        />
 
         {/* Tabs */}
 
@@ -572,14 +564,14 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: "#B8C0C0",
+    backgroundColor: COLORS.mutedStone,
   },
 
   imagePlaceholder: {
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: "#AEB7B7",
+    backgroundColor: COLORS.mutedStoneDark,
     justifyContent: "center",
     alignItems: "center",
   },

@@ -3,24 +3,36 @@ import React from "react";
 import {
   View,
   TouchableOpacity,
-  Text,
   StyleSheet,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../constants/colors";
 
 const SocialButtons = () => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.google}>G</Text>
+      <TouchableOpacity
+        style={styles.button}
+        accessibilityRole="button"
+        accessibilityLabel="Continue with Google"
+      >
+        <Ionicons name="logo-google" size={18} color={COLORS.google} />
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.apple}>●</Text>
+      <TouchableOpacity
+        style={styles.button}
+        accessibilityRole="button"
+        accessibilityLabel="Continue with Apple"
+      >
+        <Ionicons name="logo-apple" size={21} color={COLORS.apple} />
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.facebook}>f</Text>
+      <TouchableOpacity
+        style={styles.button}
+        accessibilityRole="button"
+        accessibilityLabel="Continue with Facebook"
+      >
+        <Ionicons name="logo-facebook" size={20} color={COLORS.facebook} />
       </TouchableOpacity>
     </View>
   );
@@ -43,22 +55,5 @@ const styles = StyleSheet.create({
     borderColor: COLORS.socialbutton,
     justifyContent: "center",
     alignItems: "center",
-  },
-
-  google: {
-    color:COLORS.google ,
-    fontSize: 18,
-    fontWeight: "700",
-  },
-
-  apple: {
-    color:COLORS.apple ,
-    fontSize: 18,
-  },
-
-  facebook: {
-    color:COLORS.facebook ,
-    fontSize: 23,
-    fontWeight: "700",
   },
 });

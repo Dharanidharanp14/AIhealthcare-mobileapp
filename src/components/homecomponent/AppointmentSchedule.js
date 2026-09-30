@@ -8,122 +8,75 @@ import { Ionicons } from "@expo/vector-icons";
 
 import COLORS from "../../constants/colors";
 
-const AppointmentSchedule = ({ selectedDate }) => {
-  const times = ["9 AM", "10 AM", "11 AM", "12 PM"];
-
-  // Convert YYYY-MM-DD to a readable date
-  const getSelectedDateInfo = () => {
-    if (!selectedDate) {
-      const today = new Date();
-
-      return {
-        date: today.getDate(),
-        day: today.toLocaleDateString("en-US", {
-          weekday: "long",
-        }),
-        isToday: true,
-      };
-    }
-
-    // Avoid timezone problems with YYYY-MM-DD
-    const [year, month, day] = selectedDate.split("-");
-
-    const date = new Date(
-      Number(year),
-      Number(month) - 1,
-      Number(day)
-    );
-
-    const today = new Date();
-
-    const isToday =
-      date.getFullYear() === today.getFullYear() &&
-      date.getMonth() === today.getMonth() &&
-      date.getDate() === today.getDate();
-
-    return {
-      date: date.getDate(),
-      day: date.toLocaleDateString("en-US", {
-        weekday: "long",
-      }),
-      isToday,
-    };
-  };
-
-  const selectedDateInfo = getSelectedDateInfo();
+const AppointmentSchedule = ({ selectedDate, appointments = [] }) => {
+  const date = selectedDate
+    ? new Date(`${selectedDate}T00:00:00`)
+    : new Date();
+  const validDate = Number.isNaN(date.getTime()) ? new Date() : date;
+  const dateLabel = validDate.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+  const selectedAppointments = appointments.filter(
+    (appointment) => appointment.date === selectedDate
+  );
 
   return (
     <View style={styles.container}>
-
-      {/* Selected Date */}
-      <Text style={styles.title}>
-        {selectedDateInfo.date} {selectedDateInfo.day}
-        {selectedDateInfo.isToday ? " - Today" : ""}
-      </Text>
-
-      <View style={styles.schedule}>
-
-        {/* Time column */}
-        <View style={styles.times}>
-          {times.map((time) => (
-            <Text
-              key={time}
-              style={styles.time}
-            >
-              {time}
-            </Text>
-          ))}
+      <View style={styles.heading}>
+        <View style={styles.headingText}>
+          <Text style={styles.title}>Appointments</Text>
+          <Text style={styles.dateLabel}>{dateLabel}</Text>
         </View>
+        <Ionicons
+          name="calendar-outline"
+          size={22}
+          color={COLORS.primary}
+        />
+      </View>
 
-        {/* Schedule lines */}
-        <View style={styles.lines}>
-
-          {times.map((time, index) => (
+      {selectedAppointments.length > 0 ? (
+        <View style={styles.appointmentList}>
+          {selectedAppointments.map((appointment, index) => (
             <View
-              key={time}
-              style={styles.lineRow}
+              key={appointment.id || `${appointment.date}-${appointment.time}-${index}`}
+              style={styles.appointment}
             >
-
-              {/* Dashed line */}
-              <View style={styles.dashedLine} />
-
-              {/* Appointment */}
-              {index === 1 && (
-                <View style={styles.appointment}>
-
-                  <View style={styles.appointmentContent}>
-
-                    <Text style={styles.doctorName}>
-                      Dr. Olivia Turner, M.D.
-                    </Text>
-
-                    <Text style={styles.description}>
-                      Treatment and prevention of
-                    </Text>
-
-                    <Text style={styles.description}>
-                      skin and photodermatitis.
-                    </Text>
-
-                  </View>
-
-                  <View style={styles.close}>
-                    <Ionicons
-                      name="close"
-                      size={12}
-                      color={COLORS.primary}
-                    />
-                  </View>
-
-                </View>
-              )}
-
+              <View style={styles.timeColumn}>
+                <Text style={styles.time}>{appointment.time}</Text>
+              </View>
+              <View style={styles.appointmentDetails}>
+                <Text style={styles.doctorName} numberOfLines={1}>
+                  {appointment.doctorName || "Appointment"}
+                </Text>
+                {!!appointment.description && (
+                  <Text style={styles.description} numberOfLines={2}>
+                    {appointment.description}
+                  </Text>
+                )}
+              </View>
             </View>
           ))}
-
         </View>
-
-      </View>
+      ) : (
+        <View style={styles.emptyState}>
+          <View style={styles.emptyIcon}>
+            <Ionicons
+              name="calendar-clear-outline"
+              size={21}
+              color={COLORS.mutedBlue}
+            />
+          </View>
+          <View style={styles.emptyText}>
+            <Text style={styles.emptyTitle}>No appointments scheduled</Text>
+            <Text style={styles.description}>
+              There are no appointments for this day.
+            </Text>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
@@ -133,90 +86,105 @@ export default AppointmentSchedule;
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 30,
-    marginTop: 25,
-    height: 140,
-    borderRadius: 25,
-    backgroundColor: COLORS.white,
-    padding: 15,
+    marginTop: 20,
+    paddingTop: 16,
+    paddingBottom: 4,
+    borderTopWidth: 1,
+    borderTopColor: COLORS.border,
+  },
+
+  heading: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 12,
+  },
+
+  headingText: {
+    flex: 1,
   },
 
   title: {
-    textAlign: "right",
     color: COLORS.primary,
-    fontSize: 10,
-    marginRight: 5,
-    marginBottom: 8,
+    fontSize: 16,
+    fontWeight: "700",
   },
 
-  schedule: {
-    flexDirection: "row",
-    flex: 1,
+  dateLabel: {
+    color: COLORS.gray,
+    fontSize: 12,
+    marginTop: 3,
   },
 
-  times: {
-    width: 38,
-    justifyContent: "space-between",
-    paddingVertical: 2,
-  },
-
-  time: {
-    fontSize: 9,
-    color: COLORS.primary,
-  },
-
-  lines: {
-    flex: 1,
-    justifyContent: "space-between",
-  },
-
-  lineRow: {
-    height: 25,
-    justifyContent: "center",
-    position: "relative",
-  },
-
-  dashedLine: {
-    borderTopWidth: 1,
-    borderColor: COLORS.primary,
-    borderStyle: "dashed",
-    width: "100%",
+  appointmentList: {
+    gap: 10,
   },
 
   appointment: {
-    position: "absolute",
-    left: 10,
-    top: -8,
-    width: "80%",
-    height: 45,
-    borderRadius: 12,
-    backgroundColor: COLORS.lightBlue,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
     flexDirection: "row",
-    justifyContent: "space-between",
+    alignItems: "stretch",
+    borderRadius: 10,
+    backgroundColor: COLORS.softBlue,
+    overflow: "hidden",
   },
 
-  appointmentContent: {
+  timeColumn: {
+    minWidth: 66,
+    justifyContent: "center",
+    paddingHorizontal: 10,
+    borderRightWidth: 1,
+    borderRightColor: COLORS.border,
+  },
+
+  time: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: COLORS.primary,
+  },
+
+  appointmentDetails: {
     flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
+
+  emptyState: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 5,
+  },
+
+  emptyIcon: {
+    width: 42,
+    height: 42,
+    borderRadius: 12,
+    backgroundColor: COLORS.softBlue,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 12,
+  },
+
+  emptyText: {
+    flex: 1,
+  },
+
+  emptyTitle: {
+    color: COLORS.darkText,
+    fontSize: 13,
+    fontWeight: "600",
+    marginBottom: 3,
   },
 
   doctorName: {
     color: COLORS.primary,
-    fontSize: 10,
+    fontSize: 13,
     fontWeight: "600",
   },
 
   description: {
-    color: "#555",
-    fontSize: 8,
-  },
-
-  close: {
-    width: 15,
-    height: 15,
-    borderRadius: 8,
-    backgroundColor: COLORS.white,
-    justifyContent: "center",
-    alignItems: "center",
+    color: COLORS.gray,
+    fontSize: 11,
+    lineHeight: 15,
   },
 });

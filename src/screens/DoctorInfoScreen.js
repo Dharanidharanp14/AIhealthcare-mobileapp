@@ -14,6 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 
 import COLORS from "../constants/colors";
+import CommonHeader from "../components/CommonHeader";
 
 const DoctorInfoScreen = ({ navigation, route }) => {
 
@@ -36,24 +37,10 @@ const DoctorInfoScreen = ({ navigation, route }) => {
 
       {/* HEADER */}
 
-      <View style={styles.header}>
-
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Ionicons
-            name="chevron-back"
-            size={28}
-            color={COLORS.primary}
-          />
-        </TouchableOpacity>
-
-        <Text style={styles.headerTitle}>
-          Doctor Details
-        </Text> 
-
-      </View>
+      <CommonHeader
+        title="Doctor Details"
+        navigation={navigation}
+      />
 
 
       <ScrollView
@@ -318,7 +305,7 @@ const styles = StyleSheet.create({
 
   specialty: {
     textAlign: "center",
-    color: "#555",
+    color: COLORS.softText,
     fontSize: 12,
     marginTop: 6,
   },
@@ -334,7 +321,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
-    backgroundColor: "#E8EDFF",
+    backgroundColor: COLORS.QUESTION_BG,
     paddingHorizontal: 13,
     paddingVertical: 7,
     borderRadius: 20,
@@ -351,14 +338,14 @@ const styles = StyleSheet.create({
   },
 
   sectionTitle: {
-    color: "#111",
+    color: COLORS.darkText,
     fontSize: 17,
     fontWeight: "600",
     marginBottom: 8,
   },
 
   description: {
-    color: "#666",
+    color: COLORS.darkGray,
     fontSize: 12,
     lineHeight: 19,
   },
@@ -371,7 +358,7 @@ const styles = StyleSheet.create({
 
   infoCard: {
     width: "31%",
-    backgroundColor: "#E8EDFF",
+    backgroundColor: COLORS.QUESTION_BG,
     borderRadius: 16,
     alignItems: "center",
     paddingVertical: 13,
@@ -394,13 +381,13 @@ const styles = StyleSheet.create({
   },
 
   infoLabel: {
-    color: "#666",
+    color: COLORS.darkGray,
     fontSize: 9,
     marginTop: 3,
   },
 
   availability: {
-    backgroundColor: "#E8EDFF",
+    backgroundColor: COLORS.QUESTION_BG,
     borderRadius: 15,
     padding: 15,
   },
@@ -412,13 +399,13 @@ const styles = StyleSheet.create({
   },
 
   availableTitle: {
-    color: "#222",
+    color: COLORS.deepText,
     fontSize: 12,
     fontWeight: "600",
   },
 
   availableTime: {
-    color: "#666",
+    color: COLORS.darkGray,
     fontSize: 10,
     marginTop: 3,
   },
@@ -445,7 +432,7 @@ const styles = StyleSheet.create({
   },
 
   emptyText: {
-    color: "#777",
+    color: COLORS.gray,
     fontSize: 14,
   },
 

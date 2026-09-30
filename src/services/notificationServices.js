@@ -2,6 +2,7 @@ import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import Constants from "expo-constants";
 import { Platform } from "react-native";
+import COLORS from "../constants/colors";
 
 export async function registerForPushNotificationsAsync() {
   if (!Device.isDevice) {
@@ -15,7 +16,7 @@ export async function registerForPushNotificationsAsync() {
       name: "default",
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
-      lightColor: "#2864F0",
+      lightColor: COLORS.primary,
     });
   }
 

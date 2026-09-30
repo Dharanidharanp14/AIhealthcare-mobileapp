@@ -16,6 +16,7 @@ import {
 } from "@expo/vector-icons";
 
 import COLORS from "../../constants/colors";
+import CommonHeader from "../../components/CommonHeader";
 
 const SettingsScreen = ({ navigation }) => {
 
@@ -48,27 +49,10 @@ const SettingsScreen = ({ navigation }) => {
 
       {/* ================= HEADER ================= */}
 
-      <View style={styles.header}>
-
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-          activeOpacity={0.7}
-        >
-          <Ionicons
-            name="chevron-back"
-            size={28}
-            color={COLORS.primary}
-          />
-        </TouchableOpacity>
-
-        <Text style={styles.headerTitle}>
-          Settings
-        </Text>
-
-        <View style={styles.headerSpace} />
-
-      </View>
+      <CommonHeader
+        title="Settings"
+        navigation={navigation}
+      />
 
 
       {/* ================= SETTINGS LIST ================= */}

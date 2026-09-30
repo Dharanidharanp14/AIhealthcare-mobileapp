@@ -8,18 +8,20 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
-  Modal,
 } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import COLORS from "../constants/colors";
+import CommonHeader from "../components/CommonHeader";
+import { useCustomAlert } from "../components/CustomAlertProvider";
 
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/Custombutton";
 
 
 const ForgotPasswordScreen = ({ navigation }) => {
+  const { showAlert } = useCustomAlert();
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -27,20 +29,22 @@ const ForgotPasswordScreen = ({ navigation }) => {
   const otpRefs = useRef([]);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSendOtp = () => {
 
     if (!email.trim()) {
 
-      alert("Please enter your email address");
+      showAlert("Email required", "Please enter your email address.", [], "error");
 
       return;
     }
 
 
-    alert(
-      "OTP sent successfully.\n\nFor testing use: 123456"
+    showAlert(
+      "Verification code sent",
+      "For this demo, enter 123456 to continue.",
+      [],
+      "success"
     );
 
 
@@ -131,9 +135,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
 
       setOtpError(true);
 
-      alert(
-        "Please enter the complete 6-digit OTP"
-      );
+      showAlert("Incomplete code", "Please enter the complete 6-digit OTP.", [], "error");
 
       return;
     }
@@ -143,9 +145,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
 
       setOtpError(true);
 
-      alert(
-        "Invalid OTP. Please try again."
-      );
+      showAlert("Incorrect code", "That code is not valid. Please try again.", [], "error");
 
       return;
     }
@@ -164,9 +164,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       !confirmPassword
     ) {
 
-      alert(
-        "Please enter both passwords"
-      );
+      showAlert("Password required", "Please enter and confirm your new password.", [], "error");
 
       return;
     }
@@ -174,9 +172,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
 
     if (newPassword.length < 6) {
 
-      alert(
-        "Password must contain at least 6 characters"
-      );
+      showAlert("Password too short", "Use at least 6 characters for your password.", [], "error");
 
       return;
     }
@@ -187,30 +183,26 @@ const ForgotPasswordScreen = ({ navigation }) => {
       confirmPassword
     ) {
 
-      alert(
-        "Passwords do not match"
-      );
+      showAlert("Passwords do not match", "Check both fields and try again.", [], "error");
 
       return;
     }
 
 
-    setShowSuccess(true);
-
-    setTimeout(() => {
-
-      setShowSuccess(false);
-
-      navigation.navigate(
-        "SignIn",
+    showAlert(
+      "Password reset successful",
+      "Your new password is ready. Continue to sign in.",
+      [
         {
-          resetEmail: email,
-
-          resetPassword: newPassword,
-        }
-      );
-
-    }, 3000);
+          text: "Continue",
+          onPress: () => navigation.navigate("SignIn", {
+            resetEmail: email,
+            resetPassword: newPassword,
+          }),
+        },
+      ],
+      "success"
+    );
   };
 
 
@@ -247,28 +239,10 @@ const ForgotPasswordScreen = ({ navigation }) => {
         contentContainerStyle={styles.scroll}
       >
 
-        <View style={styles.header}>
-
-          <TouchableOpacity
-            onPress={handleBack}
-            style={styles.backButton}
-          >
-
-            <Text style={styles.back}>
-              ‹
-            </Text>
-
-          </TouchableOpacity>
-
-
-          <Text style={styles.headerTitle}>
-            Forgot Password
-          </Text>
-
-
-          <View style={styles.headerSpacer} />
-
-        </View>
+        <CommonHeader
+          title="Forgot Password"
+          onBackPress={handleBack}
+        />
 
 
         {step === 1 && (
@@ -452,46 +426,6 @@ const ForgotPasswordScreen = ({ navigation }) => {
 
       </ScrollView>
 
-      <Modal
-        visible={showSuccess}
-        transparent
-        animationType="fade"
-      >
-
-        <View style={styles.modalOverlay}>
-
-          <View style={styles.successBox}>
-
-            <View style={styles.checkCircle}>
-
-              <Text style={styles.check}>
-                ✓
-              </Text>
-
-            </View>
-
-
-            <Text style={styles.successTitle}>
-              Password Reset Successful
-            </Text>
-
-
-            <Text style={styles.successText}>
-              Your password has been successfully
-              updated.
-            </Text>
-
-
-            <Text style={styles.redirectText}>
-              Redirecting to Login...
-            </Text>
-
-          </View>
-
-        </View>
-
-      </Modal>
-
     </SafeAreaView>
   );
 };
@@ -596,55 +530,4 @@ const styles = StyleSheet.create({
      marginBottom: 20,
   },
 
-  modalOverlay: {
-    flex: 1,
-    backgroundColor:COLORS.text,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  successBox: {
-    width: "82%",
-    backgroundColor: COLORS.white,
-    borderRadius: 20,
-    padding: 30,
-    alignItems: "center",
-  },
-
-  checkCircle: {
-    width: 65,
-    height: 65,
-    borderRadius: 33,
-    backgroundColor: COLORS.lightBlue,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 18,
-  },
-
-  check: {
-    fontSize: 35,
-    color: COLORS.primary,
-    fontWeight: "700",
-  },
-
-  successTitle: {
-    fontSize: 18,
-    fontWeight: "700",
-    color: COLORS.primary,
-    textAlign: "center",
-  },
-
-  successText: {
-    fontSize: 12,
-    color: COLORS.gray,
-    textAlign: "center",
-    marginTop: 10,
-    lineHeight: 18,
-  },
-
-  redirectText: {
-    fontSize: 11,
-    color: COLORS.gray,
-     marginTop: 20,
-  },
 });

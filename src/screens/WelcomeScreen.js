@@ -31,9 +31,7 @@ const WelcomeScreen = ({ navigation }) => {
         <View style={styles.bottomContainer}>
 
           <Text style={styles.description}>
-            Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit. Sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua.
+            Explore provider profiles, review appointment details, and manage your profile in one place.
           </Text>
 
         <CustomButton
