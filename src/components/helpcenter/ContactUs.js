@@ -16,15 +16,15 @@ const ContactUs = () => {
   const contactData = [
     {
       title: "Customer Service",
-      detail: "+1 (202) 555-0142",
+      detail: "+91 6382872107",
       icon: "call-outline",
-      url: "tel:+12025550142",
+      url: "tel:+916382872107",
     },
     {
       title: "Email Support",
-      detail: "support@example.com",
+      detail: "dharanidharan8607@gmail.com",
       icon: "mail-outline",
-      url: "mailto:support@example.com",
+      url: "mailto:dharanidharan8607@gmail.com",
     },
     {
       title: "Website",
@@ -34,9 +34,9 @@ const ContactUs = () => {
     },
     {
       title: "WhatsApp",
-      detail: "+1 (202) 555-0142",
+      detail: "+91 6382872107",
       icon: "logo-whatsapp",
-      url: "https://wa.me/12025550142",
+      url: "https://wa.me/916382872107",
     },
     {
       title: "Facebook",

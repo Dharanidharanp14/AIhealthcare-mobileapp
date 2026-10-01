@@ -40,6 +40,10 @@ const ReviewScreen = ({
 
   const doctorImage =
     doctor?.image || doctor?.photo;
+  const doctorImageSource =
+    typeof doctorImage === "string"
+      ? { uri: doctorImage }
+      : doctorImage;
 
   const handleReview = () => {
 
@@ -79,7 +83,7 @@ const ReviewScreen = ({
 
           {doctorImage ? (
             <Image
-              source={doctorImage}
+              source={doctorImageSource}
               style={styles.doctorImage}
             />
           ) : (

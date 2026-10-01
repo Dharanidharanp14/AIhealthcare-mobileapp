@@ -220,13 +220,9 @@ const styles = StyleSheet.create({
 
   categoryButton: {
     flex: 1,
-
     height: 27,
-
     borderRadius: 15,
-
     backgroundColor: COLORS.lightBlue,
-
     justifyContent: "center",
     alignItems: "center",
   },
@@ -246,46 +242,29 @@ const styles = StyleSheet.create({
 
   questionBox: {
     minHeight: 33,
-
     borderRadius: 18,
-
     backgroundColor: COLORS.QUESTION_BG,
-
     paddingHorizontal: 13,
-
     flexDirection: "row",
-
     alignItems: "center",
-
     justifyContent: "space-between",
-
     marginBottom: 9,
   },
 
   questionText: {
     flex: 1,
-
     color: COLORS.gray,
-
     fontSize: 11,
-
     marginRight: 8,
   },
-
   answerContainer: {
     paddingHorizontal: 20,
-
     paddingTop: 0,
-
     paddingBottom: 12,
   },
-
   answerText: {
     color: COLORS.gray,
-
     fontSize: 10,
-
     lineHeight: 13,
   },
-
 });

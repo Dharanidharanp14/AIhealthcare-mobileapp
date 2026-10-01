@@ -343,14 +343,10 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingBottom: 30,
   },
-
   // ================= IMAGE =================
-
   imageSection: {
     alignItems: "center",
-
     marginTop: 8,
-
     marginBottom: 45,
   },
 
@@ -360,34 +356,22 @@ const styles = StyleSheet.create({
 
   profileImage: {
     width: 106,
-
     height: 106,
-
     borderRadius: 53,
   },
 
   editImageButton: {
     position: "absolute",
-
     right: -1,
-
     bottom: 0,
-
     width: 32,
-
     height: 32,
-
     borderRadius: 16,
-
     backgroundColor: BLUE,
-
     justifyContent: "center",
-
     alignItems: "center",
   },
-
   // ================= FORM =================
-
   form: {
     paddingHorizontal: 30,
   },
@@ -398,81 +382,53 @@ const styles = StyleSheet.create({
 
   label: {
     fontSize: 18,
-
     fontWeight: "500",
-
     color: COLORS.darkText,
-
     marginBottom: 9,
   },
 
   input: {
     height: 45,
-
     borderRadius: 12,
-
     backgroundColor:COLORS.QUESTION_BG,
-
     paddingHorizontal: 24,
-
     fontSize: 17,
-
     color:COLORS.apple,
   },
-
   // ================= DATE =================
-
   dateInput: {
     height: 45,
-
     borderRadius: 12,
-
     backgroundColor: COLORS.QUESTION_BG,
-
     paddingHorizontal: 24,
-
     flexDirection: "row",
-
     alignItems: "center",
-
     justifyContent: "space-between",
   },
 
   dateText: {
     fontSize: 17,
-
     color: COLORS.apple,
   },
 
   placeholderDate: {
     color: BLUE,
   },
-
   // ================= BOTTOM =================
-
   bottom: {
     flex: 1,
-
     justifyContent: "flex-end",
-
     alignItems: "center",
-
     paddingTop: 20,
-
     paddingBottom: 40,
   },
 
   updateButton: {
     width: 207,
-
     height: 45,
-
     borderRadius: 25,
-
     backgroundColor: COLORS.primary,
-
     justifyContent: "center",
-
     alignItems: "center",
   },
 

@@ -30,15 +30,13 @@ const AllAppointmentScreen = ({ navigation }) => {
   const appointmentDoctors = doctors.slice(0, 4);
 
   const renderDoctorImage = (doctor) => {
-    if (doctor.image) {
-      return doctor.image;
+    const image = doctor.image || doctor.photo;
+
+    if (typeof image === "string") {
+      return { uri: image };
     }
 
-    if (doctor.photo) {
-      return doctor.photo;
-    }
-
-    return null;
+    return image || null;
   };
 
   const renderUpcomingCard = (doctor, index) => {
