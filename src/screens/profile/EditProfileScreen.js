@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import {
   View,
   Text,
@@ -11,67 +10,140 @@ import {
   Platform,
   ScrollView,
 } from "react-native";
-
 import {
   SafeAreaView,
 } from "react-native-safe-area-context";
-
 import {
   Ionicons,
 } from "@expo/vector-icons";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
+import * as ImagePicker from "expo-image-picker";
 import COLORS from "../../constants/colors";
 import CommonHeader from "../../components/CommonHeader";
 import { useCustomAlert } from "../../components/CustomAlertProvider";
-import { getUserProfile, setUserProfile } from "../../store/userStore";
+import {
+  getUserProfile,
+  setUserProfile,
+} from "../../store/userStore";
 
 const BLUE = COLORS.blue;
 
-
-const EditProfileScreen = ({
-  navigation,
-  route,
-}) => {
+const EditProfileScreen = ({ navigation, route }) => {
   const { showAlert } = useCustomAlert();
 
+  const profile =route?.params?.profile ||
+    getUserProfile();
 
-  const profile = route?.params?.profile || getUserProfile();
+  const [fullName, setFullName] = useState( profile?.fullName || "");
+  const [phone, setPhone] = useState(profile?.phone || "");
+  const [email, setEmail] = useState( profile?.email || "");
+  const [dateOfBirth, setDateOfBirth] = useState(profile?.dateOfBirth || "");
+  const [profileImage, setProfileImage] = useState( profile?.image || "https://randomuser.me/api/portraits/men/1.jpg" );
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(dateOfBirth ? convertStringToDate(dateOfBirth) : new Date() );
+
+  function convertStringToDate(dateString) {
+
+    if (!dateString) {
+      return new Date();
+    }
+
+    const parts =
+      dateString.split("/");
+
+    if (parts.length !== 3) {
+      return new Date();
+    }
+
+    const day =
+      parseInt(parts[0], 10);
+
+    const month =
+      parseInt(parts[1], 10) - 1;
+
+    const year =
+      parseInt(parts[2], 10);
+
+    return new Date(
+      year,
+      month,
+      day
+    );
+  }
+
+  const handleImagePress = async () => {
+
+    try {
+
+      const permission =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+      if (!permission.granted) {
+
+        showAlert(
+          "Permission Required",
+          "Please allow photo library access to select a profile picture.",
+          [],
+          "error"
+        );
+
+        return;
+      }
+
+      const result =
+        await ImagePicker.launchImageLibraryAsync({
+
+          mediaTypes:
+            ["images"],
+
+          allowsEditing: true,
+
+          aspect: [1, 1],
+
+          quality: 0.8,
+        });
 
 
+      // User selected image
 
-  const [fullName, setFullName] = useState(
-    profile.fullName
-  );
+      if (!result.canceled) {
 
-  const [phone, setPhone] = useState(
-    profile.phone
-  );
+        const selectedImage =
+          result.assets[0].uri;
 
-  const [email, setEmail] = useState(
-    profile.email
-  );
+        setProfileImage(
+          selectedImage
+        );
+      }
 
-  const [dateOfBirth, setDateOfBirth] = useState(
-    profile.dateOfBirth
-  );
+    } catch (error) {
 
-  // ================= DATE PICKER =================
+      console.log(
+        "Image picker error:",
+        error
+      );
 
-  const [showDatePicker, setShowDatePicker] =
-    useState(false);
+      showAlert(
+        "Error",
+        "Unable to select image. Please try again.",
+        [],
+        "error"
+      );
+    }
+  };
 
-  const [selectedDate, setSelectedDate] =
-    useState(new Date());
 
-  // ================= OPEN DATE PICKER =================
+  // ================= DATE PRESS =================
 
   const handleDatePress = () => {
     setShowDatePicker(true);
   };
 
-
-  const handleDateChange = (event, date) => {
+  const handleDateChange = (
+    event,
+    date
+  ) => {
 
     setShowDatePicker(false);
 
@@ -79,54 +151,97 @@ const EditProfileScreen = ({
 
       setSelectedDate(date);
 
-      const day = String(
-        date.getDate()
-      ).padStart(2, "0");
+      const day =
+        String(
+          date.getDate()
+        ).padStart(2, "0");
 
-      const month = String(
-        date.getMonth() + 1
-      ).padStart(2, "0");
+      const month =
+        String(
+          date.getMonth() + 1
+        ).padStart(2, "0");
 
-      const year = date.getFullYear();
+      const year =
+        date.getFullYear();
 
       const formattedDate =
         `${day} / ${month} / ${year}`;
 
-      setDateOfBirth(formattedDate);
+      setDateOfBirth(
+        formattedDate
+      );
     }
   };
 
 
+  // ================= UPDATE PROFILE =================
 
- const handleUpdateProfile = () => {
+  const handleUpdateProfile = () => {
 
-  if (!fullName.trim()) {
-    showAlert("Name required", "Please enter your full name.", [], "error");
-    return;
-  }
+    if (!fullName.trim()) {
 
-  const updatedProfile = {
-    fullName: fullName.trim(),
-    phone: phone.trim(),
-    email: email.trim(),
-    dateOfBirth: dateOfBirth,
+      showAlert(
+        "Name required",
+        "Please enter your full name.",
+        [],
+        "error"
+      );
+
+      return;
+    }
+
+
+    const updatedProfile = {
+
+      fullName:
+        fullName.trim(),
+
+      phone:
+        phone.trim(),
+
+      email:
+        email.trim(),
+
+      dateOfBirth:
+        dateOfBirth,
+
+      image:
+        profileImage,
+    };
+
+
+    // Save profile
+
+    setUserProfile(
+      updatedProfile
+    );
+
+
+    // Navigate back to profile
+
+    navigation.navigate(
+      "Main",
+      {
+        screen: "Profile",
+
+        params: {
+          updatedProfile:
+            updatedProfile,
+        },
+      }
+    );
   };
 
-  setUserProfile(updatedProfile);
-
-  navigation.navigate("Main", {
-    screen: "Profile",
-    params: {
-      updatedProfile: updatedProfile,
-    },
-  });
-};
 
   return (
-    <SafeAreaView style={styles.container}>
+
+    <SafeAreaView
+      style={styles.container}
+    >
 
       <KeyboardAvoidingView
         style={styles.keyboard}
+
         behavior={
           Platform.OS === "ios"
             ? "padding"
@@ -136,10 +251,13 @@ const EditProfileScreen = ({
 
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.scroll}
+
+          contentContainerStyle={
+            styles.scroll
+          }
         >
 
-          {/* ================= HEADER ================= */}
+          {/* HEADER */}
 
           <CommonHeader
             title="Profile"
@@ -150,116 +268,214 @@ const EditProfileScreen = ({
 
           {/* ================= PROFILE IMAGE ================= */}
 
-          <View style={styles.imageSection}>
+          <View
+            style={styles.imageSection}
+          >
 
-            <View style={styles.imageContainer}>
+            <View
+              style={styles.imageContainer}
+            >
 
               <Image
                 source={{
-                  uri:
-                    "https://randomuser.me/api/portraits/men/1.jpg",
+                  uri: profileImage,
                 }}
-                style={styles.profileImage}
+                style={
+                  styles.profileImage
+                }
               />
 
+
+              {/* EDIT IMAGE BUTTON */}
+
               <TouchableOpacity
-                style={styles.editImageButton}
+                style={
+                  styles.editImageButton
+                }
+
+                onPress={
+                  handleImagePress
+                }
+
+                activeOpacity={0.8}
               >
 
                 <Ionicons
                   name="create-outline"
                   size={17}
-                  color={COLORS.white}
+                  color={
+                    COLORS.white
+                  }
                 />
 
               </TouchableOpacity>
 
             </View>
 
+
+            {/* CHANGE PHOTO TEXT */}
+
+            <TouchableOpacity
+              onPress={
+                handleImagePress
+              }
+            >
+
+              <Text
+                style={
+                  styles.changePhotoText
+                }
+              >
+                Change Profile Picture
+              </Text>
+
+            </TouchableOpacity>
+
           </View>
 
 
           {/* ================= FORM ================= */}
 
-          <View style={styles.form}>
+          <View
+            style={styles.form}
+          >
 
-            {/* ================= FULL NAME ================= */}
+            {/* FULL NAME */}
 
-            <View style={styles.fieldContainer}>
+            <View
+              style={
+                styles.fieldContainer
+              }
+            >
 
-              <Text style={styles.label}>
+              <Text
+                style={styles.label}
+              >
                 Full Name
               </Text>
 
               <TextInput
                 style={styles.input}
+
                 value={fullName}
-                onChangeText={setFullName}
+
+                onChangeText={
+                  setFullName
+                }
+
                 placeholder="Full Name"
-                placeholderTextColor={COLORS.gray}
+
+                placeholderTextColor={
+                  COLORS.gray
+                }
               />
 
             </View>
 
 
-            {/* ================= PHONE ================= */}
+            {/* PHONE */}
 
-            <View style={styles.fieldContainer}>
+            <View
+              style={
+                styles.fieldContainer
+              }
+            >
 
-              <Text style={styles.label}>
+              <Text
+                style={styles.label}
+              >
                 Phone Number
               </Text>
 
               <TextInput
                 style={styles.input}
+
                 value={phone}
-                onChangeText={setPhone}
+
+                onChangeText={
+                  setPhone
+                }
+
                 placeholder="+123 567 89000"
-                placeholderTextColor={COLORS.gray}
+
+                placeholderTextColor={
+                  COLORS.gray
+                }
+
                 keyboardType="phone-pad"
               />
 
             </View>
 
 
-            {/* ================= EMAIL ================= */}
+            {/* EMAIL */}
 
-            <View style={styles.fieldContainer}>
+            <View
+              style={
+                styles.fieldContainer
+              }
+            >
 
-              <Text style={styles.label}>
+              <Text
+                style={styles.label}
+              >
                 Email
               </Text>
 
               <TextInput
                 style={styles.input}
+
                 value={email}
-                onChangeText={setEmail}
+
+                onChangeText={
+                  setEmail
+                }
+
                 placeholder="johndoe@example.com"
-                placeholderTextColor={COLORS.gray}
+
+                placeholderTextColor={
+                  COLORS.gray
+                }
+
                 keyboardType="email-address"
+
                 autoCapitalize="none"
               />
 
             </View>
 
 
-            {/* ================= DATE OF BIRTH ================= */}
+            {/* DATE OF BIRTH */}
 
-            <View style={styles.fieldContainer}>
+            <View
+              style={
+                styles.fieldContainer
+              }
+            >
 
-              <Text style={styles.label}>
+              <Text
+                style={styles.label}
+              >
                 Date Of Birth
               </Text>
 
+
               <TouchableOpacity
-                style={styles.dateInput}
-                onPress={handleDatePress}
+                style={
+                  styles.dateInput
+                }
+
+                onPress={
+                  handleDatePress
+                }
+
                 activeOpacity={0.8}
               >
 
                 <Text
                   style={[
                     styles.dateText,
+
                     !dateOfBirth &&
                       styles.placeholderDate,
                   ]}
@@ -267,6 +483,7 @@ const EditProfileScreen = ({
                   {dateOfBirth ||
                     "DD / MM / YYYY"}
                 </Text>
+
 
                 <Ionicons
                   name="calendar-outline"
@@ -279,21 +496,39 @@ const EditProfileScreen = ({
             </View>
 
 
-            {/* ================= DATE PICKER ================= */}
+            {/* DATE PICKER */}
 
             {showDatePicker && (
+
               <DateTimePicker
-                value={selectedDate}
+
+                value={
+                  selectedDate
+                }
+
                 mode="date"
+
                 display={
                   Platform.OS === "ios"
                     ? "spinner"
                     : "calendar"
                 }
-                maximumDate={new Date()}
-                onValueChange={handleDateChange}
-                onDismiss={() => setShowDatePicker(false)}
+
+                maximumDate={
+                  new Date()
+                }
+
+                onChange={
+                  handleDateChange
+                }
+
+                onDismiss={() =>
+                  setShowDatePicker(
+                    false
+                  )
+                }
               />
+
             )}
 
           </View>
@@ -301,15 +536,27 @@ const EditProfileScreen = ({
 
           {/* ================= UPDATE BUTTON ================= */}
 
-          <View style={styles.bottom}>
+          <View
+            style={styles.bottom}
+          >
 
             <TouchableOpacity
-              style={styles.updateButton}
-              onPress={handleUpdateProfile}
+              style={
+                styles.updateButton
+              }
+
+              onPress={
+                handleUpdateProfile
+              }
+
               activeOpacity={0.8}
             >
 
-              <Text style={styles.updateButtonText}>
+              <Text
+                style={
+                  styles.updateButtonText
+                }
+              >
                 Update Profile
               </Text>
 
@@ -332,7 +579,8 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor:COLORS.white,
+    backgroundColor:
+      COLORS.white,
   },
 
   keyboard: {
@@ -343,11 +591,14 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingBottom: 30,
   },
+
+
   // ================= IMAGE =================
+
   imageSection: {
     alignItems: "center",
     marginTop: 8,
-    marginBottom: 45,
+    marginBottom: 35,
   },
 
   imageContainer: {
@@ -362,16 +613,31 @@ const styles = StyleSheet.create({
 
   editImageButton: {
     position: "absolute",
+
     right: -1,
     bottom: 0,
+
     width: 32,
     height: 32,
+
     borderRadius: 16,
+
     backgroundColor: BLUE,
+
     justifyContent: "center",
     alignItems: "center",
   },
-  // ================= FORM =================
+
+  changePhotoText: {
+    marginTop: 10,
+
+    fontSize: 12,
+
+    color: BLUE,
+
+    fontWeight: "500",
+  },
+
   form: {
     paddingHorizontal: 30,
   },
@@ -390,12 +656,12 @@ const styles = StyleSheet.create({
   input: {
     height: 45,
     borderRadius: 12,
-    backgroundColor:COLORS.QUESTION_BG,
+    backgroundColor: COLORS.QUESTION_BG,
     paddingHorizontal: 24,
     fontSize: 17,
-    color:COLORS.apple,
+    color: COLORS.apple,
   },
-  // ================= DATE =================
+
   dateInput: {
     height: 45,
     borderRadius: 12,
@@ -403,7 +669,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent:"space-between",
   },
 
   dateText: {
@@ -414,9 +680,8 @@ const styles = StyleSheet.create({
   placeholderDate: {
     color: BLUE,
   },
-  // ================= BOTTOM =================
+
   bottom: {
-    flex: 1,
     justifyContent: "flex-end",
     alignItems: "center",
     paddingTop: 20,
@@ -427,15 +692,14 @@ const styles = StyleSheet.create({
     width: 207,
     height: 45,
     borderRadius: 25,
-    backgroundColor: COLORS.primary,
+    backgroundColor:COLORS.primary,
     justifyContent: "center",
     alignItems: "center",
   },
 
   updateButtonText: {
-    color: COLORS.white,
+    color:COLORS.white,
     fontSize: 20,
     fontWeight: "500",
   },
-
 });

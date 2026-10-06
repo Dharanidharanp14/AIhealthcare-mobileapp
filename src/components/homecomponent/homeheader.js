@@ -29,7 +29,7 @@ const HomeHeader = ({ navigation }) => {
       <View style={styles.profileContainer}>
         <Image
           source={{
-            uri: "https://randomuser.me/api/portraits/men/1.jpg",
+            uri: profile.image || "https://randomuser.me/api/portraits/men/1.jpg",
           }}
           style={styles.avatar}
         />
