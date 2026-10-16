@@ -107,19 +107,26 @@ export const markConversationRead = (conversationId) => {
   notifyListeners();
 };
 
-export const addMessageToConversation = (conversationId, text, time) => {
+export const addMessageToConversation = (
+  conversationId,
+  text,
+  time,
+  attachments = []
+) => {
   const conversation = conversations.find((item) => item.id === conversationId);
-  if (!conversation) return;
+  if (!conversation || (!text.trim() && attachments.length === 0)) return;
 
   const message = {
     id: `${conversationId}-${Date.now()}`,
     sender: "me",
     text,
     time,
+    attachments,
   };
 
   conversation.messages.push(message);
-  conversation.lastMessage = text;
+  conversation.lastMessage =
+    text || attachments.map((attachment) => attachment.name).join(", ");
   conversation.time = time;
   conversation.unreadCount = 0;
   notifyListeners();

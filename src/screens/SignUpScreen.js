@@ -8,10 +8,9 @@ import {
   StatusBar,
   TouchableOpacity,
   ScrollView,
-  Platform,
 } from "react-native";
-import DateTimePicker from '@react-native-community/datetimepicker';
 import COLORS from "../constants/colors";
+import CustomCalendar from "../components/CustomCalendar";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/Custombutton";
 import CommonHeader from "../components/CommonHeader";
@@ -55,20 +54,18 @@ const handleSignup = () => {
   );
 };
 
-  const onChangeDate = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShowDatePicker(Platform.OS === 'ios');
-    setDate(currentDate);
-    
-  
-    const day = String(currentDate.getDate()).padStart(2, '0');
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    const year = currentDate.getFullYear();
-    setDob(`${day}/${month}/${year}`);
+  const openDatePicker = () => {
+    setShowDatePicker(true);
   };
 
-  const showDatepicker = () => {
-    setShowDatePicker(true);
+  const selectDate = (selectedDate) => {
+    setDate(selectedDate);
+    setDob(
+      `${String(selectedDate.getDate()).padStart(2, "0")}/${String(
+        selectedDate.getMonth() + 1
+      ).padStart(2, "0")}/${selectedDate.getFullYear()}`
+    );
+    setShowDatePicker(false);
   };
 
   return (
@@ -130,10 +127,10 @@ const handleSignup = () => {
             keyboardType="phone-pad"
           />
 
-          {/* Date of Birth with Date Picker */}
+          {/* Date of Birth with custom calendar */}
           <TouchableOpacity
             activeOpacity={0.7}
-            onPress={showDatepicker}
+            onPress={openDatePicker}
           >
             <View pointerEvents="none">
               <CustomInput
@@ -147,17 +144,12 @@ const handleSignup = () => {
             </View>
           </TouchableOpacity>
 
-          {showDatePicker && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode="date"
-              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-              onValueChange={onChangeDate}
-              onDismiss={() => setShowDatePicker(false)}
-              maximumDate={new Date()}
-            />
-          )}
+          <CustomCalendar
+            visible={showDatePicker}
+            initialDate={dob ? date : null}
+            onCancel={() => setShowDatePicker(false)}
+            onConfirm={selectDate}
+          />
 
           <Text style={styles.terms}>
             By continuing, you agree to our Terms &

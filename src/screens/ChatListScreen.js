@@ -14,6 +14,7 @@ import COLORS from "../constants/colors";
 import CommonHeader from "../components/CommonHeader";
 import {
   getConversations,
+  markConversationRead,
   subscribeToConversations,
 } from "../data/chats";
 
@@ -39,6 +40,7 @@ const ChatListScreen = ({ navigation }) => {
   }, [search]);
 
   const openConversation = (conversation) => {
+    markConversationRead(conversation.id);
     navigation.navigate("MessageChat", {
       conversationId: conversation.id,
     });

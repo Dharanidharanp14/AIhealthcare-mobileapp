@@ -17,10 +17,10 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 
-import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
 import COLORS from "../../constants/colors";
 import CommonHeader from "../../components/CommonHeader";
+import CustomCalendar from "../../components/CustomCalendar";
 import { useCustomAlert } from "../../components/CustomAlertProvider";
 import {
   getUserProfile,
@@ -140,37 +140,12 @@ const EditProfileScreen = ({ navigation, route }) => {
     setShowDatePicker(true);
   };
 
-  const handleDateChange = (
-    event,
-    date
-  ) => {
-
+  const handleDateChange = (date) => {
     setShowDatePicker(false);
-
-    if (date) {
-
-      setSelectedDate(date);
-
-      const day =
-        String(
-          date.getDate()
-        ).padStart(2, "0");
-
-      const month =
-        String(
-          date.getMonth() + 1
-        ).padStart(2, "0");
-
-      const year =
-        date.getFullYear();
-
-      const formattedDate =
-        `${day} / ${month} / ${year}`;
-
-      setDateOfBirth(
-        formattedDate
-      );
-    }
+    setSelectedDate(date);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    setDateOfBirth(`${day} / ${month} / ${date.getFullYear()}`);
   };
 
 
@@ -496,40 +471,12 @@ const EditProfileScreen = ({ navigation, route }) => {
             </View>
 
 
-            {/* DATE PICKER */}
-
-            {showDatePicker && (
-
-              <DateTimePicker
-
-                value={
-                  selectedDate
-                }
-
-                mode="date"
-
-                display={
-                  Platform.OS === "ios"
-                    ? "spinner"
-                    : "calendar"
-                }
-
-                maximumDate={
-                  new Date()
-                }
-
-                onChange={
-                  handleDateChange
-                }
-
-                onDismiss={() =>
-                  setShowDatePicker(
-                    false
-                  )
-                }
-              />
-
-            )}
+            <CustomCalendar
+              visible={showDatePicker}
+              initialDate={selectedDate}
+              onCancel={() => setShowDatePicker(false)}
+              onConfirm={handleDateChange}
+            />
 
           </View>
 
