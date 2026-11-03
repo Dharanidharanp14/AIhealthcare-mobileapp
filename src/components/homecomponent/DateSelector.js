@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React, { useMemo } from "react";
 import {
   View,
@@ -7,9 +8,9 @@ import {
   ScrollView,
 } from "react-native";
 
-import COLORS from "../../constants/colors";
-
 const DateSelector = ({ selectedDate, setSelectedDate }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const dates = useMemo(() => {
     const today = new Date();
 
@@ -105,7 +106,7 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
 
 export default DateSelector;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   container: {
     marginTop: 18,
   },
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 2,
     borderRadius: 12,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     borderWidth: 1,
     borderColor: COLORS.border,
   },
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 23,
     fontWeight: "600",
-    color: COLORS.black,
+    color: COLORS.darkText,
     lineHeight: 27,
   },
 

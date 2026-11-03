@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React, { useState } from "react";
 
 import {
@@ -16,16 +17,16 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 
-import COLORS from "../../constants/colors";
 import CommonHeader from "../../components/CommonHeader";
 import { useCustomAlert } from "../../components/CustomAlertProvider";
 
-const BLUE = COLORS.blue;
 
 const PasswordManagerScreen = ({
   navigation,
   route,
 }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const { showAlert } = useCustomAlert();
 
 
@@ -102,7 +103,7 @@ const PasswordManagerScreen = ({
       <CommonHeader
         title="Password Manager"
         navigation={navigation}
-        backIconColor={BLUE}
+        backIconColor={COLORS.blue}
       />
 
 
@@ -126,7 +127,7 @@ const PasswordManagerScreen = ({
               onChangeText={setCurrentPassword}
               secureTextEntry={!showCurrentPassword}
               placeholder="*************"
-              placeholderTextColor={BLUE}
+              placeholderTextColor={COLORS.blue}
             />
 
             <TouchableOpacity
@@ -180,7 +181,7 @@ const PasswordManagerScreen = ({
               onChangeText={setNewPassword}
               secureTextEntry={!showNewPassword}
               placeholder="*************"
-              placeholderTextColor={BLUE}
+              placeholderTextColor={COLORS.blue}
             />
 
             <TouchableOpacity
@@ -223,7 +224,7 @@ const PasswordManagerScreen = ({
               onChangeText={setConfirmPassword}
               secureTextEntry={!showConfirmPassword}
               placeholder="*************"
-              placeholderTextColor={BLUE}
+              placeholderTextColor={COLORS.blue}
             />
 
             <TouchableOpacity
@@ -279,11 +280,11 @@ export default PasswordManagerScreen;
 // STYLES
 // =====================================================
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   // ================= HEADER =================
@@ -311,7 +312,7 @@ const styles = StyleSheet.create({
 
     textAlign: "center",
 
-    color: BLUE,
+    color: COLORS.blue,
 
     fontSize: 22,
 
@@ -365,7 +366,7 @@ const styles = StyleSheet.create({
 
     fontSize: 16,
 
-    color: BLUE,
+    color: COLORS.blue,
   },
 
   eyeButton: {
@@ -385,7 +386,7 @@ const styles = StyleSheet.create({
   },
 
   forgotText: {
-    color: BLUE,
+    color: COLORS.blue,
 
     fontSize: 13,
 
@@ -411,7 +412,7 @@ const styles = StyleSheet.create({
 
     borderRadius: 25,
 
-    backgroundColor: BLUE,
+    backgroundColor: COLORS.blue,
 
     justifyContent: "center",
 

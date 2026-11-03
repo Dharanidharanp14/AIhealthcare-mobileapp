@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React, { useEffect, useState } from "react";
 
 import {
@@ -13,7 +14,6 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import COLORS from "../../constants/colors";
 import CommonHeader from "../../components/CommonHeader";
 
 import {
@@ -22,13 +22,13 @@ import {
   subscribeToUserProfile,
 } from "../../store/userStore";
 
-const BLUE = COLORS.blue;
-const LIGHT_BLUE = COLORS.paleBlue;
 
 const DEFAULT_PROFILE_IMAGE =
   "https://randomuser.me/api/portraits/men/1.jpg";
 
 const ProfileScreen = ({ navigation, route }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
  
   const [profile, setProfile] = useState(
     getUserProfile()
@@ -142,7 +142,7 @@ const ProfileScreen = ({ navigation, route }) => {
       <CommonHeader
         title="My Profile"
         navigation={navigation}
-        backIconColor={BLUE}
+        backIconColor={COLORS.blue}
         style={styles.profileHeader}
         titleStyle={styles.headerTitle}
       />
@@ -203,7 +203,7 @@ const ProfileScreen = ({ navigation, route }) => {
                 <Ionicons
                   name={item.icon}
                   size={25}
-                  color={BLUE}
+                  color={COLORS.blue}
                 />
               </View>
 
@@ -219,7 +219,7 @@ const ProfileScreen = ({ navigation, route }) => {
                 <Ionicons
                   name="chevron-forward"
                   size={22}
-                  color={LIGHT_BLUE}
+                  color={COLORS.paleBlue}
                   style={styles.arrow}
                 />
               )}
@@ -293,10 +293,10 @@ const ProfileScreen = ({ navigation, route }) => {
 export default ProfileScreen;
 
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   profileHeader: {
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: BLUE,
+    backgroundColor: COLORS.blue,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 22,
-    backgroundColor: LIGHT_BLUE,
+    backgroundColor: COLORS.paleBlue,
     justifyContent: "center",
     alignItems: "center",
     marginRight: 20,
@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
   },
 
   logoutModal: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.surface,
     height: 205,
     borderTopLeftRadius: 28,
     borderTopRightRadius: 28,
@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
   },
 
   logoutTitle: {
-    color: BLUE,
+    color: COLORS.blue,
     fontSize: 20,
     fontWeight: "700",
     marginBottom: 15,
@@ -421,14 +421,14 @@ const styles = StyleSheet.create({
   cancelButton: {
     flex: 1,
     height: 43,
-    backgroundColor: LIGHT_BLUE,
+    backgroundColor: COLORS.paleBlue,
     borderRadius: 23,
     justifyContent: "center",
     alignItems: "center",
   },
 
   cancelText: {
-    color: BLUE,
+    color: COLORS.blue,
     fontSize: 17,
     fontWeight: "600",
   },
@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
   logoutButton: {
     flex: 1,
     height: 43,
-    backgroundColor: BLUE,
+    backgroundColor: COLORS.blue,
     borderRadius: 23,
     justifyContent: "center",
     alignItems: "center",

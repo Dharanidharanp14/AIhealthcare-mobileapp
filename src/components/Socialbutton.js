@@ -1,3 +1,4 @@
+import { useTheme } from "../context/ThemeContext.js";
 import React from "react";
 
 import {
@@ -6,9 +7,9 @@ import {
   StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import COLORS from "../constants/colors";
-
 const SocialButtons = () => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -40,7 +41,7 @@ const SocialButtons = () => {
 
 export default SocialButtons;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "center",

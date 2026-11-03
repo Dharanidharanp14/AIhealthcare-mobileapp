@@ -1,3 +1,4 @@
+import { useTheme } from "../context/ThemeContext.js";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   Modal,
@@ -7,8 +8,6 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import COLORS from "../constants/colors";
-
 const MIN_YEAR = 1900;
 const WEEKDAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 const YEARS_PER_PAGE = 12;
@@ -19,6 +18,8 @@ const CustomCalendar = ({
   onCancel,
   onConfirm,
 }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const today = useMemo(() => new Date(), []);
   const [calendarMonth, setCalendarMonth] = useState(() => {
     const startDate = initialDate || new Date();
@@ -369,7 +370,7 @@ const CustomCalendar = ({
 
 export default CustomCalendar;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   overlay: {
     flex: 1,
     justifyContent: "center",
@@ -382,7 +383,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     padding: 20,
     borderRadius: 24,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.surface,
   },
   heading: {
     flexDirection: "row",

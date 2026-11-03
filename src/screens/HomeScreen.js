@@ -1,3 +1,4 @@
+import { useTheme } from "../context/ThemeContext.js";
 import React, { useMemo, useState } from "react";
 
 import {
@@ -21,8 +22,6 @@ import DateSelector from "../components/homecomponent/DateSelector";
 import DoctorCard from "../components/homecomponent/DoctorCard";
 import AppointmentSchedule from "../components/homecomponent/AppointmentSchedule";
 
-import COLORS from "../constants/colors";
-
 const toDateKey = (date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -32,6 +31,8 @@ const toDateKey = (date) => {
 };
 
 const HomeScreen = ({ navigation }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
 
   const [search, setSearch] = useState("");
 
@@ -245,11 +246,11 @@ const HomeScreen = ({ navigation }) => {
 export default HomeScreen;
 
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   scrollContent: {

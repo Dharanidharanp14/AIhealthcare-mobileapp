@@ -1,3 +1,4 @@
+import { useTheme } from "../context/ThemeContext.js";
 import React, { useRef, useState } from "react";
 
 import {
@@ -14,11 +15,8 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import COLORS from "../constants/colors";
 import CommonHeader from "../components/CommonHeader";
 
-
-const BLUE = COLORS.primary;
 
 const notificationSeed = [
   {
@@ -55,6 +53,8 @@ let notificationCache;
 
 
 const NotificationScreen = ({ navigation }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const [notifications, setNotifications] = useState(() => {
     notificationCache ||= notificationSeed;
     return notificationCache;
@@ -96,22 +96,13 @@ const NotificationScreen = ({ navigation }) => {
       edges={["top", "left", "right"]}
     >
 
-      {/* =================================================
-          HEADER
-      ================================================= */}
-
       <CommonHeader
         title="Notifications"
         navigation={navigation}
-        backIconColor={BLUE}
+        backIconColor={COLORS.primary}
         style={styles.header}
         titleStyle={styles.headerTitle}
       />
-
-
-      {/* =================================================
-          CONTENT
-      ================================================= */}
 
       <ScrollView
         style={styles.scrollView}
@@ -209,6 +200,8 @@ const NotificationRow = ({
   onLongPress,
   onDelete,
 }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const deleteWidth = 84;
   const translateX = useRef(new Animated.Value(0)).current;
   const selectionModeRef = useRef(selectionMode);
@@ -303,7 +296,7 @@ const NotificationRow = ({
             />
           )}
           <View style={styles.iconContainer}>
-            <Ionicons name={item.icon} size={24} color={BLUE} />
+            <Ionicons name={item.icon} size={24} color={COLORS.primary} />
           </View>
           <View style={styles.notificationContent}>
             <Text style={styles.notificationTitle} numberOfLines={1}>
@@ -335,7 +328,7 @@ export default NotificationScreen;
 // STYLES
 // =====================================================
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   // ===================================================
   // SAFE AREA
@@ -344,7 +337,7 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
 
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
 
@@ -357,11 +350,11 @@ const styles = StyleSheet.create({
 
     paddingHorizontal: 20,
 
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   headerTitle: {
-    color: BLUE,
+    color: COLORS.primary,
 
     fontSize: 22,
 
@@ -378,7 +371,7 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
 
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   contentContainer: {
@@ -499,7 +492,7 @@ const styles = StyleSheet.create({
 
     width: "100%",
 
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.surface,
 
     borderRadius: 16,
 

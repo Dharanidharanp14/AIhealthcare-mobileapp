@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -7,10 +8,11 @@ import {
   StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import COLORS from "../../constants/colors";
 import { getUserProfile, subscribeToUserProfile } from "../../store/userStore";
 
 const HomeHeader = ({ navigation }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const [profile, setProfile] = useState(getUserProfile());
 
   useEffect(() => {
@@ -54,7 +56,7 @@ const HomeHeader = ({ navigation }) => {
   <Ionicons
     name="notifications-outline"
     size={23}
-    color={COLORS.black}
+    color={COLORS.darkText}
   />
 </TouchableOpacity>
 
@@ -65,7 +67,7 @@ const HomeHeader = ({ navigation }) => {
   <Ionicons
     name="settings-outline"
     size={23}
-            color={COLORS.black}
+            color={COLORS.darkText}
           />
         </TouchableOpacity>
 
@@ -77,7 +79,7 @@ const HomeHeader = ({ navigation }) => {
 
 export default HomeHeader;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
   },
 
   name: {
-    color: COLORS.black,
+    color: COLORS.darkText,
     fontSize: 18,
     fontWeight: "600",
     marginTop: 2,

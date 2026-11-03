@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Constants from "expo-constants";
 import AppNavigator from "./src/navigations/AppNavigator";
 import CustomAlertProvider from "./src/components/CustomAlertProvider";
+import { ThemeProvider } from "./src/context/ThemeContext";
 
 function App() {
   useEffect(() => {
@@ -37,9 +38,11 @@ function App() {
   }, []);
 
   return (
-    <CustomAlertProvider>
-      <AppNavigator />
-    </CustomAlertProvider>
+    <ThemeProvider>
+      <CustomAlertProvider>
+        <AppNavigator />
+      </CustomAlertProvider>
+    </ThemeProvider>
   );
 }
 

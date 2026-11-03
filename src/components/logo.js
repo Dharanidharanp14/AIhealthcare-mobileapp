@@ -1,8 +1,9 @@
+import { useTheme } from "../context/ThemeContext.js";
 import React from "react";
 import { Image, StyleSheet, View, Text } from "react-native";
-import COLORS from "../constants/colors";
-
 const Logo = () => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   return (
     <View style={styles.container}>
       <Image
@@ -23,7 +24,7 @@ const Logo = () => {
 
 export default Logo;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",

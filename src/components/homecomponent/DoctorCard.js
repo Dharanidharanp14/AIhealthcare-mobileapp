@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React from "react";
 
 import {
@@ -9,14 +10,14 @@ import {
 } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
-import COLORS from "../../constants/colors";
-
 const DoctorCard = ({
   doctor,
   navigation,
   liked = false,
   onLike,
 }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
 
   // Safety check
   if (!doctor) {
@@ -101,7 +102,7 @@ const DoctorCard = ({
 export default DoctorCard;
 
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   card: {
     minHeight: 102,
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1,
     borderColor: COLORS.border,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.surface,
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 12,

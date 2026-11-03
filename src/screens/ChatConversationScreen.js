@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useTheme } from "../context/ThemeContext.js";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
@@ -12,11 +13,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
-import COLORS from "../constants/colors";
 import CommonHeader from "../components/CommonHeader";
 import { useCustomAlert } from "../components/CustomAlertProvider";
 import {
@@ -27,6 +28,8 @@ import {
 } from "../data/chats";
 
 const ChatConversationScreen = ({ navigation, route }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const { showAlert } = useCustomAlert();
   const [conversations, setConversations] = useState(getConversations);
   const [draft, setDraft] = useState("");
@@ -48,11 +51,13 @@ const ChatConversationScreen = ({ navigation, route }) => {
     });
   }, []);
 
-  useEffect(() => {
-    if (conversation) {
-      markConversationRead(conversation.id);
-    }
-  }, [conversation?.id]);
+  useFocusEffect(
+    useCallback(() => {
+      if (conversation) {
+        markConversationRead(conversation.id);
+      }
+    }, [conversation?.id])
+  );
 
   const sendMessage = () => {
     const text = draft.trim();
@@ -374,10 +379,10 @@ const ChatConversationScreen = ({ navigation, route }) => {
 
 export default ChatConversationScreen;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
   keyboard: {
     flex: 1,
@@ -411,7 +416,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
   messagesContainer: {
     flex: 1,

@@ -1,3 +1,4 @@
+import { useTheme } from "../context/ThemeContext.js";
 import React from "react";
 import {
   View,
@@ -7,12 +8,13 @@ import {
 } from "react-native";
 
 
-import COLORS from "../constants/colors";
 import Logo from "../components/logo";
 import CustomButton from "../components/Custombutton";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const WelcomeScreen = ({ navigation }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -58,7 +60,7 @@ const WelcomeScreen = ({ navigation }) => {
 
 export default WelcomeScreen;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.welcomescreen

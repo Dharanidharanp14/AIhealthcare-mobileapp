@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React from "react";
 import {
   Linking,
@@ -8,10 +9,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import COLORS from "../../constants/colors";
 import { useCustomAlert } from "../CustomAlertProvider";
 
 const ContactUs = () => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const { showAlert } = useCustomAlert();
   const contactData = [
     {
@@ -102,7 +104,7 @@ const ContactUs = () => {
 export default ContactUs;
 
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   container: {
     flex: 1,
@@ -131,7 +133,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.border,
     borderRadius: 12,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   iconContainer: {

@@ -1,4 +1,4 @@
-const COLORS = {
+const LIGHT_COLORS = {
   primary: "#2864F0",
   blue: "#2864FF",
   black: "#000000",
@@ -43,6 +43,46 @@ const COLORS = {
   mutedStone: "#B8C0C0",
   mutedStoneDark: "#AEB7B7",
   softPeriwinkle: "#8DA8FF",
+  surface: "#FFFFFF",
 };
 
-export default COLORS;
+const DARK_COLORS = {
+  ...LIGHT_COLORS,
+  lightBlue: "#263451",
+  paleBlue: "#263451",
+  softBlue: "#202B41",
+  skyBlue: "#263451",
+  mutedBlue: "#8FAAFF",
+  subtleBlue: "#A9B6D0",
+  softLavender: "#263451",
+  softGray: "#374153",
+  headerBlue: "#8FAAFF",
+  textDark: "#F4F7FF",
+  mediumText: "#D5DCEC",
+  softText: "#B7C2D6",
+  darkText: "#F4F7FF",
+  gray: "#9EABC1",
+  background: "#101522",
+  text: "#E8EDF7",
+  inputBackground: "#1C2638",
+  border: "#35425A",
+  placeholder: "#8794AB",
+  socialbutton: "#35425A",
+  apple: "#F4F7FF",
+  QUESTION_BG: "#202B41",
+  lightGray: "#3A4558",
+  overlayBlue: "rgba(4, 9, 20, 0.72)",
+  lightLavender: "#263451",
+  paleSoftBlue: "#263451",
+  softPurple: "#AABFFF",
+  darkGray: "#A5B0C2",
+  deepText: "#E8EDF7",
+  searchText: "#D5DCEC",
+  mutedStone: "#93A0B2",
+  mutedStoneDark: "#8794A6",
+  softPeriwinkle: "#AABFFF",
+  surface: "#171F2E",
+};
+
+export { DARK_COLORS, LIGHT_COLORS };
+export default LIGHT_COLORS;

@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React, { useState } from "react";
 import {
   View,
@@ -7,9 +8,9 @@ import {
   ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import COLORS from "../../constants/colors";
-
 const FAQ = () => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const [activeCategory, setActiveCategory] =
     useState("Popular Topic");
   const [openQuestion, setOpenQuestion] =
@@ -204,7 +205,7 @@ const FAQ = () => {
 export default FAQ;
 
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   container: {
     paddingHorizontal: 30,

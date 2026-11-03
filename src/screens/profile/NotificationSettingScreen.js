@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React, { useState } from "react";
 
 import {
@@ -15,15 +16,14 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 
-import COLORS from "../../constants/colors";
 import CommonHeader from "../../components/CommonHeader";
 
-const BLUE = COLORS.blue;
-const LIGHT_BLUE = COLORS.paleBlue;
 
 const NotificationSettingScreen = ({
   navigation,
 }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
 
   const [settings, setSettings] = useState({
     general: true,
@@ -86,7 +86,7 @@ const NotificationSettingScreen = ({
       <CommonHeader
         title="Notification Setting"
         navigation={navigation}
-        backIconColor={BLUE}
+        backIconColor={COLORS.blue}
       />
 
 
@@ -141,11 +141,11 @@ const NotificationSettingScreen = ({
 
 export default NotificationSettingScreen;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   header: {
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
 
     textAlign: "center",
 
-    color: BLUE,
+    color: COLORS.blue,
 
     fontSize: 22,
 
@@ -218,11 +218,11 @@ const styles = StyleSheet.create({
   },
 
   switchOn: {
-    backgroundColor: BLUE,
+    backgroundColor: COLORS.blue,
   },
 
   switchOff: {
-    backgroundColor: LIGHT_BLUE,
+    backgroundColor: COLORS.paleBlue,
   },
 
   switchCircle: {
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
 
     borderRadius: 11,
 
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   circleOn: {

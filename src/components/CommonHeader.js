@@ -1,3 +1,4 @@
+import { useTheme } from "../context/ThemeContext.js";
 import React from "react";
 import {
   StyleSheet,
@@ -6,8 +7,6 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import COLORS from "../constants/colors";
-
 const CommonHeader = ({
   title,
   subtitle,
@@ -21,8 +20,10 @@ const CommonHeader = ({
   backButtonStyle,
   leftContainerStyle,
   rightContainerStyle,
-  backIconColor = COLORS.primary,
+  backIconColor,
 }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const handleBackPress = onBackPress || (() => navigation?.goBack());
 
   return (
@@ -42,7 +43,7 @@ const CommonHeader = ({
             <Ionicons
               name="chevron-back"
               size={25}
-              color={backIconColor}
+              color={backIconColor || COLORS.primary}
             />
           </TouchableOpacity>
         ) : null}
@@ -76,7 +77,7 @@ const CommonHeader = ({
 
 export default CommonHeader;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   container: {
     height: 72,
     flexDirection: "row",

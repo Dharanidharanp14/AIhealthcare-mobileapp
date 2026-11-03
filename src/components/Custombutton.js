@@ -1,11 +1,10 @@
+import { useTheme } from "../context/ThemeContext.js";
 import React from "react";
 import {
   TouchableOpacity,
   Text,
   StyleSheet,
 } from "react-native";
-
-import COLORS from "../constants/colors";
 
 const CustomButton = ({
   title,
@@ -14,6 +13,8 @@ const CustomButton = ({
   buttonColor,
   textColor,
 }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   return (
     <TouchableOpacity
       activeOpacity={0.8}
@@ -39,7 +40,7 @@ const CustomButton = ({
 
 export default CustomButton;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   button: {
     width: "100%",
     height: 48,

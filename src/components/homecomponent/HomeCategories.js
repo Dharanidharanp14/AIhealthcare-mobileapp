@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React from "react";
 import {
   View,
@@ -6,9 +7,9 @@ import {
   StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import COLORS from "../../constants/colors";
-
 const HomeCategories = ({ active, setActive }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   return (
     <View style={styles.container}>
 
@@ -60,7 +61,7 @@ const HomeCategories = ({ active, setActive }) => {
 
 export default HomeCategories;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   container: {
     flexDirection: "row",
     paddingHorizontal: 30,

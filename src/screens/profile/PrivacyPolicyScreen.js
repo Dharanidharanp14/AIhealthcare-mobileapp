@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React from "react";
 
 import {
@@ -16,12 +17,12 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 
-import COLORS from "../../constants/colors";
 import CommonHeader from "../../components/CommonHeader";
 
-const BLUE = COLORS.blue;
 
 const PrivacyPolicyScreen = ({ navigation }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -31,7 +32,7 @@ const PrivacyPolicyScreen = ({ navigation }) => {
       <CommonHeader
         title="Privacy Policy"
         navigation={navigation}
-        backIconColor={BLUE}
+        backIconColor={COLORS.blue}
       />
 
 
@@ -142,11 +143,11 @@ export default PrivacyPolicyScreen;
 // STYLES
 // =====================================================
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   // ================= HEADER =================
@@ -174,7 +175,7 @@ const styles = StyleSheet.create({
 
     textAlign: "center",
 
-    color: BLUE,
+    color: COLORS.blue,
 
     fontSize: 22,
 
@@ -216,7 +217,7 @@ const styles = StyleSheet.create({
   // ================= TERMS =================
 
   sectionTitle: {
-    color: BLUE,
+    color: COLORS.blue,
 
     fontSize: 19,
 

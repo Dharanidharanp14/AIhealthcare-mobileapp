@@ -1,3 +1,4 @@
+import { useTheme } from "../context/ThemeContext.js";
 import React, { useState } from "react";
 
 import {
@@ -9,8 +10,6 @@ import {
 } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
-import COLORS from "../constants/colors";
-
 const CustomInput = ({
   label,
   placeholder,
@@ -20,6 +19,8 @@ const CustomInput = ({
   secureTextEntry = false,
   keyboardType = "default",
 }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const [showPassword, setShowPassword] = useState(false);
   return (
     <View style={styles.container}>
@@ -66,7 +67,7 @@ const CustomInput = ({
 };
 export default CustomInput;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   container: {
     marginBottom: 16,
   },

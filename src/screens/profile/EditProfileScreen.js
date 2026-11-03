@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React, { useState } from "react";
 import {
   View,
@@ -18,7 +19,6 @@ import {
 } from "@expo/vector-icons";
 
 import * as ImagePicker from "expo-image-picker";
-import COLORS from "../../constants/colors";
 import CommonHeader from "../../components/CommonHeader";
 import CustomCalendar from "../../components/CustomCalendar";
 import { useCustomAlert } from "../../components/CustomAlertProvider";
@@ -27,9 +27,10 @@ import {
   setUserProfile,
 } from "../../store/userStore";
 
-const BLUE = COLORS.blue;
 
 const EditProfileScreen = ({ navigation, route }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const { showAlert } = useCustomAlert();
 
   const profile =route?.params?.profile ||
@@ -237,7 +238,7 @@ const EditProfileScreen = ({ navigation, route }) => {
           <CommonHeader
             title="Profile"
             navigation={navigation}
-            backIconColor={BLUE}
+            backIconColor={COLORS.blue}
           />
 
 
@@ -463,7 +464,7 @@ const EditProfileScreen = ({ navigation, route }) => {
                 <Ionicons
                   name="calendar-outline"
                   size={20}
-                  color={BLUE}
+                  color={COLORS.blue}
                 />
 
               </TouchableOpacity>
@@ -522,7 +523,7 @@ const EditProfileScreen = ({ navigation, route }) => {
 export default EditProfileScreen;
 
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   container: {
     flex: 1,
@@ -569,7 +570,7 @@ const styles = StyleSheet.create({
 
     borderRadius: 16,
 
-    backgroundColor: BLUE,
+    backgroundColor: COLORS.blue,
 
     justifyContent: "center",
     alignItems: "center",
@@ -580,7 +581,7 @@ const styles = StyleSheet.create({
 
     fontSize: 12,
 
-    color: BLUE,
+    color: COLORS.blue,
 
     fontWeight: "500",
   },
@@ -625,7 +626,7 @@ const styles = StyleSheet.create({
   },
 
   placeholderDate: {
-    color: BLUE,
+    color: COLORS.blue,
   },
 
   bottom: {

@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useTheme } from "../context/ThemeContext.js";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   FlatList,
   Image,
@@ -8,9 +9,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import COLORS from "../constants/colors";
 import CommonHeader from "../components/CommonHeader";
 import {
   getConversations,
@@ -19,6 +20,8 @@ import {
 } from "../data/chats";
 
 const ChatListScreen = ({ navigation }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const [search, setSearch] = useState("");
   const [conversations, setConversations] = useState(getConversations);
 
@@ -27,6 +30,12 @@ const ChatListScreen = ({ navigation }) => {
       setConversations(getConversations());
     });
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      setConversations(getConversations());
+    }, [])
+  );
 
   const filteredConversations = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -126,10 +135,10 @@ const ChatListScreen = ({ navigation }) => {
 
 export default ChatListScreen;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
   searchBox: {
     height: 46,

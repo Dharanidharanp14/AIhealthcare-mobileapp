@@ -1,3 +1,4 @@
+import { useTheme } from "../context/ThemeContext.js";
 import React, { useRef, useState } from "react";
 
 import {
@@ -12,7 +13,6 @@ import {
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import COLORS from "../constants/colors";
 import CommonHeader from "../components/CommonHeader";
 import { useCustomAlert } from "../components/CustomAlertProvider";
 
@@ -21,6 +21,8 @@ import CustomButton from "../components/Custombutton";
 
 
 const ForgotPasswordScreen = ({ navigation }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const { showAlert } = useCustomAlert();
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
@@ -434,11 +436,11 @@ const ForgotPasswordScreen = ({ navigation }) => {
 export default ForgotPasswordScreen;
 
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
 
@@ -515,7 +517,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 20,
     color: COLORS.primary,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
 

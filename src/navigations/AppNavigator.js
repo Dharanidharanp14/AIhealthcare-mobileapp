@@ -1,8 +1,11 @@
 import React from "react";
 
 import {
+  DarkTheme,
+  DefaultTheme,
   NavigationContainer,
 } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
 
 import {
   createNativeStackNavigator,
@@ -26,12 +29,33 @@ import NotificationSettingScreen from "../screens/profile/NotificationSettingScr
 import PrivacyPolicyScreen from "../screens/profile/PrivacyPolicyScreen";
 import HelpCenterScreen from "../screens/profile/HelpCenterScreen";
 import DoctorInfoScreen from "../screens/DoctorInfoScreen";
+import { useTheme } from "../context/ThemeContext";
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
+  const { colors, mode } = useTheme();
+  const navigationTheme = mode === "dark" ? DarkTheme : DefaultTheme;
+  const theme = {
+    ...navigationTheme,
+    colors: {
+      ...navigationTheme.colors,
+      primary: colors.primary,
+      background: colors.background,
+      card: colors.surface,
+      text: colors.text,
+      border: colors.border,
+      notification: colors.red,
+    },
+  };
+
   return (
-    <NavigationContainer>
+    <>
+      <StatusBar
+        style={mode === "dark" ? "light" : "dark"}
+        backgroundColor={colors.background}
+      />
+      <NavigationContainer theme={theme}>
 
       <Stack.Navigator
         initialRouteName="Splash"
@@ -128,7 +152,8 @@ const AppNavigator = () => {
 
       </Stack.Navigator>
 
-    </NavigationContainer>
+      </NavigationContainer>
+    </>
   );
 };
 

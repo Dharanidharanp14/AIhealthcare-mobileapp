@@ -1,3 +1,4 @@
+import { useTheme } from "../context/ThemeContext.js";
 import React, { useEffect, useState } from "react";
 
 import {
@@ -11,8 +12,6 @@ import {
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import COLORS from "../constants/colors";
-
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/Custombutton";
 import SocialButtons from "../components/Socialbutton";
@@ -22,6 +21,8 @@ import { setUserProfile } from "../store/userStore";
 
 
 const SignInScreen = ({ navigation, route }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const { showAlert } = useCustomAlert();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -171,11 +172,11 @@ const SignInScreen = ({ navigation, route }) => {
 };
 export default SignInScreen;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   scroll: {

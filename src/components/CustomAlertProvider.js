@@ -1,3 +1,4 @@
+import { useTheme } from "../context/ThemeContext.js";
 import React, { createContext, useContext, useState } from "react";
 import {
   Modal,
@@ -8,8 +9,6 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import COLORS from "../constants/colors";
-
 const CustomAlertContext = createContext(null);
 
 export const useCustomAlert = () => {
@@ -27,6 +26,8 @@ const iconByVariant = {
 };
 
 const CustomAlertProvider = ({ children }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const [alert, setAlert] = useState(null);
 
   const showAlert = (title, message = "", buttons = [], variant = "info") => {
@@ -115,7 +116,7 @@ const CustomAlertProvider = ({ children }) => {
 
 export default CustomAlertProvider;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   overlay: {
     flex: 1,
     justifyContent: "center",
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
     paddingTop: 26,
     paddingBottom: 20,
     borderRadius: 18,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.surface,
     elevation: 12,
   },
   iconCircle: {

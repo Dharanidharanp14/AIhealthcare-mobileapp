@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React from "react";
 import {
   View,
@@ -6,9 +7,9 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import COLORS from "../../constants/colors";
-
 const AppointmentSchedule = ({ selectedDate, appointments = [] }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const date = selectedDate
     ? new Date(`${selectedDate}T00:00:00`)
     : new Date();
@@ -83,7 +84,7 @@ const AppointmentSchedule = ({ selectedDate, appointments = [] }) => {
 
 export default AppointmentSchedule;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   container: {
     marginHorizontal: 30,
     marginTop: 20,

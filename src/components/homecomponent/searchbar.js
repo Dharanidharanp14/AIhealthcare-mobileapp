@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React from "react";
 import {
   View,
@@ -5,9 +6,9 @@ import {
   StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import COLORS from "../../constants/colors";
-
 const SearchBar = ({ value, onChangeText }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   return (
     <View style={styles.container}>
 
@@ -37,7 +38,7 @@ const SearchBar = ({ value, onChangeText }) => {
 
 export default SearchBar;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   container: {
     height: 74,
     marginHorizontal: 30,
@@ -52,6 +53,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 12,
     fontSize: 17,
-    color: COLORS.black,
+    color: COLORS.darkText,
   },
 });

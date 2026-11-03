@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React, { useState } from "react";
 
 import {
@@ -17,7 +18,6 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 
-import COLORS from "../../constants/colors";
 import CommonHeader from "../../components/CommonHeader";
 import { useCustomAlert } from "../../components/CustomAlertProvider";
 
@@ -25,6 +25,8 @@ const ReviewScreen = ({
   navigation,
   route,
 }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const { showAlert } = useCustomAlert();
 
   const doctor = route?.params?.doctor;
@@ -170,11 +172,11 @@ const ReviewScreen = ({
 
 export default ReviewScreen;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   content: {
@@ -206,7 +208,7 @@ const styles = StyleSheet.create({
   },
 
   description: {
-    color: COLORS.black,
+    color: COLORS.darkText,
     fontSize: 11,
     lineHeight: 14,
     marginTop: 5,
@@ -241,7 +243,7 @@ const styles = StyleSheet.create({
   },
 
   specialty: {
-    color: COLORS.black,
+    color: COLORS.darkText,
     fontSize: 12,
     marginTop: 3,
   },
@@ -264,7 +266,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     padding: 13,
     fontSize: 12,
-    color: COLORS.black,
+    color: COLORS.darkText,
   },
 
   bottom: {

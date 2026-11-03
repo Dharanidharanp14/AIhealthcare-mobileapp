@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React, { useState } from "react";
 
 import {
@@ -17,12 +18,13 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 
-import COLORS from "../../constants/colors";
 import CommonHeader from "../../components/CommonHeader";
 import { useCustomAlert } from "../../components/CustomAlertProvider";
 import doctors from "../../data/doctors";
 
 const AllAppointmentScreen = ({ navigation }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const { showAlert } = useCustomAlert();
 
   const [activeTab, setActiveTab] = useState("Complete");
@@ -469,11 +471,11 @@ const AllAppointmentScreen = ({ navigation }) => {
 
 export default AllAppointmentScreen;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   scroll: {
@@ -586,7 +588,7 @@ const styles = StyleSheet.create({
   },
 
   specialty: {
-    color: COLORS.black,
+    color: COLORS.darkText,
     fontSize: 11,
     marginTop: 3,
   },
@@ -600,7 +602,7 @@ const styles = StyleSheet.create({
   infoBadge: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     borderRadius: 15,
     paddingHorizontal: 8,
     height: 19,
@@ -638,7 +640,7 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 15,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -652,7 +654,7 @@ const styles = StyleSheet.create({
   ratingBadge: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     borderRadius: 12,
     paddingHorizontal: 8,
     height: 19,
@@ -668,7 +670,7 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -683,7 +685,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 28,
     borderRadius: 16,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     justifyContent: "center",
     alignItems: "center",
   },

@@ -6,17 +6,17 @@ import {
 
 import { Ionicons } from "@expo/vector-icons";
 
-import COLORS from "../constants/colors";
-
 import HomeNavigator from "./HomeNavigator";
 import AppointmentNavigator from "./AppointmentNavigator";
 import ChatListScreen from "../screens/ChatListScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
+import { useTheme } from "../context/ThemeContext";
 
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = ({ route }) => {
+  const { colors: COLORS } = useTheme();
 
   const currentPassword =
     route?.params?.currentPassword || "";

@@ -1,3 +1,4 @@
+import { useTheme } from "../context/ThemeContext.js";
 import React from "react";
 
 import {
@@ -13,10 +14,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Ionicons } from "@expo/vector-icons";
 
-import COLORS from "../constants/colors";
 import CommonHeader from "../components/CommonHeader";
 
 const DoctorInfoScreen = ({ navigation, route }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
 
   const doctor = route?.params?.doctor;
 
@@ -246,11 +248,11 @@ const DoctorInfoScreen = ({ navigation, route }) => {
 export default DoctorInfoScreen;
 
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   header: {
@@ -368,7 +370,7 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
     borderRadius: 18,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
     alignItems: "center",
     justifyContent: "center",
   },

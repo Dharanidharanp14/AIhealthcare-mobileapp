@@ -1,3 +1,4 @@
+import { useTheme } from "../context/ThemeContext.js";
 
 import React, { useState } from "react";
 
@@ -9,7 +10,6 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import COLORS from "../constants/colors";
 import CustomCalendar from "../components/CustomCalendar";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/Custombutton";
@@ -19,6 +19,8 @@ import SocialButtons from "../components/Socialbutton";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignUpScreen = ({ navigation }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const { showAlert } = useCustomAlert();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -190,10 +192,10 @@ const handleSignup = () => {
 
 export default SignUpScreen;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   scroll: {

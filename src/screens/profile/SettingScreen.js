@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React from "react";
 
 import {
@@ -5,6 +6,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  Switch,
 } from "react-native";
 
 import {
@@ -15,10 +17,11 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 
-import COLORS from "../../constants/colors";
 import CommonHeader from "../../components/CommonHeader";
 
 const SettingsScreen = ({ navigation }) => {
+  const { colors: COLORS, mode, themeMode, setThemeMode } = useTheme();
+  const styles = createStyles(COLORS);
 
   const settingsItems = [
     {
@@ -58,6 +61,43 @@ const SettingsScreen = ({ navigation }) => {
       {/* ================= SETTINGS LIST ================= */}
 
       <View style={styles.settingsContainer}>
+        <View style={styles.themeSetting}>
+          <View style={styles.themeDescription}>
+            <Text style={styles.settingTitle}>Dark mode</Text>
+            <Text style={styles.settingDescription}>
+              Match your device or choose a theme
+            </Text>
+          </View>
+          <Switch
+            accessibilityLabel="Dark mode"
+            value={mode === "dark"}
+            onValueChange={(enabled) =>
+              setThemeMode(enabled ? "dark" : "light")
+            }
+            trackColor={{
+              false: COLORS.border,
+              true: COLORS.primary,
+            }}
+            thumbColor={COLORS.white}
+          />
+        </View>
+
+        <TouchableOpacity
+          accessibilityRole="button"
+          accessibilityLabel="Use device theme"
+          onPress={() => setThemeMode("system")}
+          style={styles.systemThemeButton}
+          activeOpacity={0.7}
+        >
+          <Ionicons
+            name="phone-portrait-outline"
+            size={18}
+            color={COLORS.primary}
+          />
+          <Text style={styles.systemThemeText}>
+            Use device theme{themeMode === "system" ? " (active)" : ""}
+          </Text>
+        </TouchableOpacity>
 
         {settingsItems.map((item, index) => (
 
@@ -111,11 +151,11 @@ const SettingsScreen = ({ navigation }) => {
 export default SettingsScreen;
 
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   // ================= HEADER =================
@@ -185,11 +225,43 @@ const styles = StyleSheet.create({
   settingTitle: {
     flex: 1,
 
-    color: COLORS.black,
+    color: COLORS.darkText,
 
     fontSize: 18,
 
     fontWeight: "400",
+  },
+
+  themeSetting: {
+    minHeight: 66,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 8,
+  },
+
+  themeDescription: {
+    flex: 1,
+  },
+
+  settingDescription: {
+    marginTop: 4,
+    color: COLORS.gray,
+    fontSize: 13,
+  },
+
+  systemThemeButton: {
+    minHeight: 44,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    marginBottom: 14,
+  },
+
+  systemThemeText: {
+    color: COLORS.primary,
+    fontSize: 14,
+    fontWeight: "600",
   },
 
 });

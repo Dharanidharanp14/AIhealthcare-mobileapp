@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React, { useState } from "react";
 
 import {
@@ -16,8 +17,6 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 
-import COLORS from "../../constants/colors";
-
 import CommonHeader from "../../components/CommonHeader";
 
 import FAQ from "../../components/helpcenter/FAQ";
@@ -25,6 +24,8 @@ import ContactUs from "../../components/helpcenter/ContactUs";
 
 
 const HelpCenterScreen = ({ navigation }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
 
   const [activeTab, setActiveTab] =
     useState("Contact Us");
@@ -144,12 +145,12 @@ const HelpCenterScreen = ({ navigation }) => {
 export default HelpCenterScreen;
 
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   container: {
     flex: 1,
 
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   /* ================= HEADER ================= */
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     height: 42,
 
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
 
     borderRadius: 22,
 
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
 
     fontSize: 13,
 
-    color: COLORS.black,
+    color: COLORS.darkText,
   },
 
   /* ================= TABS ================= */

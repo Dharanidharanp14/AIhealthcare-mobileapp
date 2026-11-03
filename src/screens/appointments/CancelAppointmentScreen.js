@@ -1,3 +1,4 @@
+import { useTheme } from "../../context/ThemeContext.js";
 import React, { useState } from "react";
 
 import {
@@ -16,7 +17,6 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 
-import COLORS from "../../constants/colors";
 import CommonHeader from "../../components/CommonHeader";
 import { useCustomAlert } from "../../components/CustomAlertProvider";
 
@@ -31,6 +31,8 @@ const CancelAppointmentScreen = ({
   navigation,
   route,
 }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   const { showAlert } = useCustomAlert();
 
   const [selectedReason, setSelectedReason] =
@@ -157,11 +159,11 @@ const CancelAppointmentScreen = ({
 
 export default CancelAppointmentScreen;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.background,
   },
 
   content: {
@@ -193,7 +195,7 @@ const styles = StyleSheet.create({
   },
 
   description: {
-    color: COLORS.black,
+    color: COLORS.darkText,
     fontSize: 11,
     lineHeight: 14,
     marginTop: 5,
@@ -217,7 +219,7 @@ const styles = StyleSheet.create({
   },
 
   reasonText: {
-    color: COLORS.black,
+    color: COLORS.darkText,
     fontSize: 14,
     marginLeft: 8,
   },
@@ -235,7 +237,7 @@ const styles = StyleSheet.create({
     borderRadius: 17,
     padding: 13,
     fontSize: 12,
-    color: COLORS.black,
+    color: COLORS.darkText,
     marginTop: 12,
   },
 

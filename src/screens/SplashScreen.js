@@ -1,3 +1,4 @@
+import { useTheme } from "../context/ThemeContext.js";
 import React, { useEffect } from "react";
 
 import {
@@ -6,10 +7,11 @@ import {
   StatusBar,
 } from "react-native";
 
-import COLORS from "../constants/colors";
 import Logo from "../components/logo";
 
 const SplashScreen = ({ navigation }) => {
+  const { colors: COLORS } = useTheme();
+  const styles = createStyles(COLORS);
   useEffect(() => {
     const timer = setTimeout(() => {
       navigation.replace("Welcome");
@@ -34,7 +36,7 @@ const SplashScreen = ({ navigation }) => {
 
 export default SplashScreen;
 
-const styles = StyleSheet.create({
+const createStyles = (COLORS) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primary,
